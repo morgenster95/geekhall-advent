@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Dices, Eye, Layers, LogIn, Share2, Sparkles } from 'lucide-react';
+import { Eye, Layers, LogIn, Share2, ShoppingCart, UserRound } from 'lucide-react';
 import { availableDay, BASE, CATEGORIES, CONTACT_URL, CONTEST_DAYS, contestOpen, doors as ALL_DOORS, OPERATOR, PRIVACY_URL, RULES_URL, SHOP } from './content';
 import { CONTENT_MODE, DEMO_MODE, PREVIEW_KEY } from './config';
 import { backend } from './backend';
@@ -180,44 +180,34 @@ export default function App() {
 
       {/* ------------------------------------------------------------- HERO */}
       <section className="hero">
-        <div className="hero-bg" aria-hidden="true" />
+        <DiceArt className="hero-dice" />
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow light"><Sparkles size={15} /> Adventní kalendář 2026</div>
-            <h1>Rozbal si <span className="hl">advent</span><small>s Geek Hallem</small></h1>
-            <p>24 karet, 24 překvapení. Každý den o půlnoci se odemkne nová karta: sleva, hra, tip nebo soutěž. Sbírej je všechny a slevové kódy zahraj v košíku.</p>
+            <h1>Rozbalte si advent <span className="red">plný karet, slev a her</span> s námi!</h1>
+            <p>Každý den o půlnoci nová karta: sleva, hra, tip nebo soutěž. Slevové kódy uplatníte v e-shopu Geek Hall.</p>
             <div className="hero-cta">
-              <a href="#kalendar" className="btn pink big">{user || guest ? 'K mé sbírce' : 'Rozbalit první kartu'} <ArrowRight size={18} /></a>
-              {!user && !guest && <button className="btn ghost" onClick={() => setLogin({ open: true })}><LogIn size={17} /> Přihlásit se</button>}
+              <a href="#kalendar" className="btn teal">{user || guest ? 'K mé sbírce' : 'Ke kalendáři'}</a>
+              {!user && !guest && <button className="btn pink" onClick={() => setLogin({ open: true })}>Přihlásit se</button>}
             </div>
-            <ul className="hero-stats" aria-label="Co v kalendáři najdete">
-              <li><b>13</b><span>slevových kódů</span></li>
-              <li><b>3</b><span>soutěže</span></li>
-              <li><b>24</b><span>karet ke sbírání</span></li>
-            </ul>
           </div>
           <HeroArt />
         </div>
-        <div className="wrap countdown" aria-label="Odpočet do Štědrého dne">
-          <div className="cd-label"><Dices size={20} /> Do konce hry zbývá</div>
-          <div className="cd-time">
-            {countdown.map((v, i) => (
-              <div key={i}><strong>{String(v).padStart(2, '0')}</strong><span>{[plural(v, 'den', 'dny', 'dní'), plural(v, 'hodina', 'hodiny', 'hodin'), plural(v, 'minuta', 'minuty', 'minut'), plural(v, 'sekunda', 'sekundy', 'sekund')][i]}</span></div>
-            ))}
-          </div>
-        </div>
       </section>
+
+      <div className="wrap countdown" aria-label="Odpočet do Štědrého dne">
+        <div className="cd-label">Do Štědrého dne zbývá</div>
+        <div className="cd-time">
+          {countdown.map((v, i) => (
+            <div key={i}><strong>{String(v).padStart(2, '0')}</strong><span>{[plural(v, 'den', 'dny', 'dní'), plural(v, 'hodina', 'hodiny', 'hodin'), plural(v, 'minuta', 'minuty', 'minut'), plural(v, 'sekunda', 'sekundy', 'sekund')][i]}</span></div>
+          ))}
+        </div>
+      </div>
 
       {/* --------------------------------------------------------- CALENDAR */}
       <main>
         <section id="kalendar" className="calendar wrap">
-          <div className="cal-head">
-            <div>
-              <div className="eyebrow">Každý den jedna nová karta</div>
-              <h2>Vyber si <span className="hl">kartu dne</span></h2>
-            </div>
-            <p>Slevové kódy, kvízy, užitečné tipy a tři soutěže o skvělé výhry. Každá karta, kterou otočíš, zůstane ve tvé sbírce.</p>
-          </div>
+          <h2 className="sec-title">Adventní kalendář</h2>
+          <p className="sec-sub">Slevové kódy, kvízy, užitečné tipy a tři soutěže o skvělé výhry. Každá karta, kterou otočíte, zůstane ve vaší sbírce.</p>
           <div className="cal-bar">
             <div className="progress">
               <span>{user || guest ? <>Sbírka: <b>{openedCount}</b> z 24 karet</> : 'Přihlaste se a začněte sbírat'}</span>
@@ -234,35 +224,59 @@ export default function App() {
         </section>
 
         <section className="how wrap">
-          <h2>Jak se hraje</h2>
-          <ol>
-            <li><b>1</b><div><strong>Přihlas se</strong><span>Jedním klikem přes Google, ať ti sbírka zůstane.</span></div></li>
-            <li><b>2</b><div><strong>Otáčej karty</strong><span>Každý den o půlnoci se odemkne nová.</span></div></li>
-            <li><b>3</b><div><strong>Zahraj kód v košíku</strong><span>Slevu uplatníš v e-shopu Geek Hall.</span></div></li>
-          </ol>
+          <h2 className="sec-title">Jak to funguje</h2>
+          <ul className="why">
+            <li><UserRound /><span>Přihlaste se jedním klikem přes Google</span></li>
+            <li><Layers /><span>Každý den o půlnoci otočte novou kartu</span></li>
+            <li><ShoppingCart /><span>Slevový kód zadejte v košíku e-shopu</span></li>
+          </ul>
         </section>
 
-        <section className="services wrap" aria-label="Prohlédni si regály">
-          <a className="shelf" href={SHOP + 'kategorie/sberatelske-hry-2/pokemoni/'}><img src={BASE + 'img/pikachu.png'} alt="" loading="lazy" /><strong>Sběratelské karty</strong><span>Pokémon, One Piece, Lorcana, Magic a další TCG.</span><ArrowUpRight size={18} /></a>
-          <a className="shelf" href={SHOP + 'kategorie/deskove-hry/'}><img className="on-white" src={BASE + 'img/strategicke.jpg'} alt="" loading="lazy" /><strong>Deskové hry</strong><span>Strategické, rodinné, párty i kooperativní hry.</span><ArrowUpRight size={18} /></a>
-          <a className="shelf" href={SHOP + 'kategorie/merch/'}><img src={BASE + 'img/obiwan.png'} alt="" loading="lazy" /><strong>Merch a figurky</strong><span>Figurky, plyšáci, oblečení a geek domácnost.</span><ArrowUpRight size={18} /></a>
-        </section>
-
-        <section className="closing">
-          <Dices size={34} />
-          <h2>Ať ti padnou samé dvacítky! Přeje <span className="hl">tým Geek Hall</span></h2>
+        <section className="cats wrap" aria-label="Kategorie">
+          <h2 className="sec-title">Kategorie</h2>
+          <div className="cat-grid">
+            <a className="cat" href={SHOP + 'kategorie/sberatelske-hry-2/pokemoni/'}><img src={BASE + 'img/pikachu.png'} alt="" loading="lazy" />Pokémoni</a>
+            <a className="cat" href={SHOP + 'kategorie/deskove-hry/'}><img src={BASE + 'img/strategicke.jpg'} alt="" loading="lazy" />Deskové hry</a>
+            <a className="cat" href={SHOP + 'kategorie/sberatelske-hry-2/'}><img src={BASE + 'img/pokeball.jpeg'} alt="" loading="lazy" />Sběratelské hry</a>
+            <a className="cat" href={SHOP + 'kategorie/merch/'}><img src={BASE + 'img/obiwan.png'} alt="" loading="lazy" />Merch a figurky</a>
+            <a className="cat" href={SHOP + 'kategorie/merch/'}><img src={BASE + 'img/potter.jpeg'} alt="" loading="lazy" />Harry Potter</a>
+            <a className="cat" href={SHOP + 'kategorie/doplnky-a-prislusenstvi/'}><img src={BASE + 'img/kostky.jpeg'} alt="" loading="lazy" />Doplňky a příslušenství</a>
+          </div>
         </section>
       </main>
 
       <footer className="footer">
         <DiceArt className="footer-dice" />
         <div className="wrap">
-          <Logo light />
-          <div className="footer-links">
-            <a href={SHOP} target="_blank" rel="noreferrer">E-shop ↗</a>
-            <a href={CONTACT_URL} target="_blank" rel="noreferrer">Kontakt ↗</a>
-            <a href={RULES_URL} target="_blank" rel="noreferrer">Pravidla soutěží</a>
-            <a href={PRIVACY_URL} target="_blank" rel="noreferrer">Ochrana osobních údajů ↗</a>
+          <div className="footer-cols">
+            <div>
+              <h3>Kontakt</h3>
+              <p><a href={`mailto:${OPERATOR.email}`}>{OPERATOR.email}</a></p>
+              <p><a href="tel:+420606373676">{OPERATOR.phone}</a></p>
+              <p className="footer-addr"><b>Geek Hall</b> prodejna:<br />{OPERATOR.address}<br />IČO: {OPERATOR.ico}</p>
+            </div>
+            <div>
+              <h3>K nákupu</h3>
+              <ul>
+                <li><a href={SHOP + 'prodejna-geek-hall/'} target="_blank" rel="noreferrer">Kamenná prodejna</a></li>
+                <li><a href={CONTACT_URL} target="_blank" rel="noreferrer">Kontakty</a></li>
+                <li><a href={SHOP + 'vse-o-nakupu/#doprava-a-platba'} target="_blank" rel="noreferrer">Platba a doprava</a></li>
+                <li><a href={SHOP + 'obchodni-podminky/'} target="_blank" rel="noreferrer">Obchodní podmínky</a></li>
+                <li><a href={PRIVACY_URL} target="_blank" rel="noreferrer">Ochrana osobních údajů</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Kategorie</h3>
+              <ul>{CATEGORIES.slice(0, 6).map((c) => <li key={c.url}><a href={c.url} target="_blank" rel="noreferrer">{c.label}</a></li>)}</ul>
+            </div>
+            <div>
+              <h3>Adventní kalendář</h3>
+              <ul>
+                <li><a href={SHOP} target="_blank" rel="noreferrer">E-shop Geek Hall</a></li>
+                <li><a href={RULES_URL} target="_blank" rel="noreferrer">Pravidla soutěží</a></li>
+                <li><a href="#soukromi">Soukromí</a></li>
+              </ul>
+            </div>
           </div>
           <div id="soukromi" className="privacy">
             <h3>Soukromí</h3>

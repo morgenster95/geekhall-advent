@@ -1,4 +1,4 @@
-import { Dices, Gamepad2, Percent, Sparkles, Trophy } from 'lucide-react';
+import { Dices, Gamepad2, Percent } from 'lucide-react';
 
 /** Hrací kostka (SVG) s danými puntíky. */
 function Die({ pips, className = '' }: { pips: [number, number][]; className?: string }) {
@@ -18,7 +18,6 @@ function Die({ pips, className = '' }: { pips: [number, number][]; className?: s
 export function HeroArt() {
   return (
     <div className="hero-art" aria-hidden="true">
-      <div className="ha-glow" />
       <div className="hc hc-l t-offer">
         <div className="hc-in">
           <div className="hc-head"><b>Sleva</b><i>★★★</i></div>
@@ -53,8 +52,6 @@ export function HeroArt() {
       <Die className="d1" pips={[[20, 20], [44, 20], [32, 32], [20, 44], [44, 44]]} />
       <Die className="d2" pips={[[20, 20], [44, 44], [32, 32]]} />
       <Die className="d3" pips={[[20, 20], [44, 20], [20, 44], [44, 44]]} />
-      <Sparkles className="ha-spark a" size={26} />
-      <Trophy className="ha-spark b" size={22} />
     </div>
   );
 }

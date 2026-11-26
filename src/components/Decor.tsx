@@ -11,7 +11,7 @@ export function Logo({ light = false }: { light?: boolean }) {
 
 /** Hrací kostky jako velká silueta v pozadí (motiv převzatý z úvodu geekhall.cz). */
 export function DiceArt({ className = '' }: { className?: string }) {
-  const pip = (x: number, y: number) => <circle key={x + '-' + y} cx={x} cy={y} r="5.5" fill="#202124" />;
+  const pip = (x: number, y: number) => <circle key={x + '-' + y} cx={x} cy={y} r="5.5" className="pip" />;
   return (
     <svg className={'dice-art ' + className} viewBox="0 0 260 150" aria-hidden="true">
       <g transform="rotate(-14 70 80)"><rect x="10" y="30" width="100" height="100" rx="20" fill="currentColor" />{[[35, 55], [85, 55], [60, 80], [35, 105], [85, 105]].map(([x, y]) => pip(x, y))}</g>

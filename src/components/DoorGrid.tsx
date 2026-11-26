@@ -53,10 +53,6 @@ export function DoorGrid({ max, opened, opening, onOpen }: Props) {
   const cols = useCols();
   return (
     <div className="binder">
-      <div className="binder-bar" aria-hidden="true">
-        <span><b>Album</b> Advent 2026</span>
-        <span className="binder-count"><b>{opened.size}</b> / 24 karet</span>
-      </div>
       <div className="grid" style={{ ['--cols' as string]: cols }} role="list" aria-label="24 adventních karet">
         {doors.map((d, i) => {
           const isOpen = opened.has(d.day);
