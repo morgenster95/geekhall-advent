@@ -96,3 +96,56 @@ export function Drift({ className = '' }: { className?: string }) {
     </svg>
   );
 }
+
+/** Santova čepice (SVG) – nasazuje se na kostky a boostery. */
+export function SantaHat({ className = '' }: { className?: string }) {
+  return (
+    <svg className={'santa-hat ' + className} viewBox="0 0 30 28" aria-hidden="true">
+      <path d="M3 22Q5 6 20 3Q17 13 27 22Z" fill="#dc3545" />
+      <path d="M12 8Q16 6 20 3Q18 9 21 14Q15 11 12 8Z" fill="#ff7b88" opacity=".6" />
+      <rect x="1" y="20" width="28" height="7" rx="3.5" fill="#fff" />
+      <circle cx="21" cy="4" r="3.6" fill="#fff" />
+    </svg>
+  );
+}
+
+/** Kostka s puntíky a Santovou čepicí – logo boosterů. */
+export function DiceHat({ className = '' }: { className?: string }) {
+  return (
+    <svg className={'dice-hat ' + className} viewBox="0 0 64 64" aria-hidden="true">
+      <g transform="rotate(8 32 38)">
+        <rect x="10" y="16" width="44" height="44" rx="10" fill="#fff" />
+        <g fill="#202124"><circle cx="21" cy="27" r="3.6" /><circle cx="43" cy="27" r="3.6" /><circle cx="32" cy="38" r="3.6" /><circle cx="21" cy="49" r="3.6" /><circle cx="43" cy="49" r="3.6" /></g>
+      </g>
+      <g transform="translate(5 -3) rotate(-18 16 14) scale(.95)">
+        <path d="M3 22Q5 6 20 3Q17 13 27 22Z" fill="#dc3545" />
+        <rect x="1" y="20" width="28" height="7" rx="3.5" fill="#fff" />
+        <circle cx="21" cy="4" r="3.6" fill="#fff" />
+      </g>
+    </svg>
+  );
+}
+
+/** d20 (dvacetistěnná kostka) s číslem 20. */
+export function D20({ className = '' }: { className?: string }) {
+  return (
+    <svg className={'d20 ' + className} viewBox="0 0 100 100" aria-hidden="true">
+      <defs><linearGradient id="d20g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#b46bff" /><stop offset="1" stopColor="#5a1fb8" /></linearGradient></defs>
+      <polygon points="50,4 92,27 92,73 50,96 8,73 8,27" fill="url(#d20g)" stroke="#fff" strokeWidth="3" strokeLinejoin="round" />
+      <polygon points="50,20 80,68 20,68" fill="rgba(255,255,255,.14)" stroke="#fff" strokeWidth="2.4" strokeLinejoin="round" />
+      <path d="M50 4V20M92 27L80 68M8 27L20 68M92 73L80 68M8 73L20 68M50 96V68" stroke="#fff" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+      <text x="50" y="62" textAnchor="middle" fontSize="23" fontWeight="900" fill="#fff" fontFamily="Roboto Variable, Roboto, sans-serif">20</text>
+    </svg>
+  );
+}
+
+const TREE = ['......Y......', '.....YYY.....', '......G......', '.....GGG.....', '....GGRGG....', '.....GGG.....', '....GGGGG....', '...GBGGGYGG..', '..GGGGGGGGG..', '.....GGG.....', '....GGGGG....', '...GGPGGGRG..', '..GGGGGGGGGG.', '.GYGGGGGBGGGG', '......TT.....', '......TT.....'];
+const TREE_COL: Record<string, string> = { G: '#2ecc71', R: '#dc3545', Y: '#ffd23f', B: '#35dccc', P: '#ff6fb5', T: '#8b5a2b' };
+/** Pixelový (8bitový) vánoční stromek s blikajícími ozdobami. */
+export function PixelTree({ className = '' }: { className?: string }) {
+  return (
+    <svg className={'pixel-tree ' + className} viewBox="0 0 13 16" shapeRendering="crispEdges" aria-hidden="true">
+      {TREE.flatMap((row, y) => [...row].map((c, x) => (c === '.' ? null : <rect key={x + '-' + y} x={x} y={y} width="1.02" height="1.02" fill={TREE_COL[c]} className={'ptx' + (c === 'G' || c === 'T' ? '' : ' orn')} style={c === 'G' || c === 'T' ? undefined : { animationDelay: `${((x + y) % 5) * 0.35}s` }} />)))}
+    </svg>
+  );
+}

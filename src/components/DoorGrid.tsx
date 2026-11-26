@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Check, Gamepad2, Lightbulb, Lock, PartyPopper, Percent, Sparkles, Trophy } from 'lucide-react';
+import { Check, Gamepad2, Lightbulb, PartyPopper, Percent, Sparkles, Trophy } from 'lucide-react';
 import type { DoorType } from '../types';
 import { doors } from '../content';
+import { Pack } from './Pack';
 
 export const typeIcon = (t?: DoorType, size = 20) => {
   switch (t) {
@@ -29,17 +30,8 @@ function useCols() {
   return cols;
 }
 
-/** Rub karty: kostka s puntíky na tmavém vzorovaném pozadí. */
-function CardBack() {
-  return (
-    <svg className="cb-dice" viewBox="0 0 64 64" aria-hidden="true">
-      <g transform="rotate(-12 32 32)">
-        <rect x="10" y="10" width="44" height="44" rx="10" fill="#fff" />
-        <g fill="#202124"><circle cx="21" cy="21" r="3.6" /><circle cx="43" cy="21" r="3.6" /><circle cx="32" cy="32" r="3.6" /><circle cx="21" cy="43" r="3.6" /><circle cx="43" cy="43" r="3.6" /></g>
-      </g>
-    </svg>
-  );
-}
+/** Barevná paleta boosteru podle dne (osm barev promíchaných tak, aby sousední boostery nebyly stejné). Finále je zlaté. */
+export const packClass = (day: number) => (day === 24 ? 'pk-final' : 'pk-' + ((day * 5) % 8));
 
 interface Props {
   max: number;
@@ -63,7 +55,7 @@ export function DoorGrid({ max, opened, opening, onOpen }: Props) {
           return (
             <div role="listitem" key={d.day} className="tile-slot">
               <button
-                className={`card t-${d.type} ${state}${today ? ' today' : ''}${opening === d.day ? ' opening' : ''}`}
+                className={`card ${packClass(d.day)} t-${d.type} ${state}${today ? ' today' : ''}${opening === d.day ? ' opening' : ''}`}
                 aria-label={label}
                 aria-disabled={locked}
                 onClick={(e) => onOpen(d.day, e.currentTarget)}
@@ -71,11 +63,10 @@ export function DoorGrid({ max, opened, opening, onOpen }: Props) {
               >
                 <span className="card-inner">
                   <span className="face back">
-                    <span className="cb-num">{d.day}</span>
-                    <CardBack />
-                    <span className="cb-foot">{locked ? <><Lock size={11} /> {d.day}. 12.</> : 'Advent 2026'}</span>
+                    <Pack badge={d.day} locked={locked} />
                     {today && <span className="card-badge">dnes</span>}
                   </span>
+                  <span className="pk-tear" aria-hidden="true" />
                   <span className="face front">
                     <span className="cf">
                       <span className="cf-head"><b>{d.day}. 12.</b><i>{stars(d.type)}</i></span>
@@ -85,6 +76,7 @@ export function DoorGrid({ max, opened, opening, onOpen }: Props) {
                     {isOpen && <span className="cf-tick"><Check size={11} /></span>}
                   </span>
                 </span>
+                <span className="pk-burst" aria-hidden="true" />
               </button>
             </div>
           );

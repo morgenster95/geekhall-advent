@@ -3,7 +3,7 @@ import { NEWSLETTER_CONSENT } from '../config';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Camera, Check, ChevronLeft, ChevronRight, Copy, Share2, X } from 'lucide-react';
 import type { Door, ListItem } from '../types';
-import { LABELS, RARITY, stars, typeIcon } from './DoorGrid';
+import { LABELS, packClass, RARITY, stars, typeIcon } from './DoorGrid';
 import { GameView } from './Games';
 
 /** text s odstavci (prázdný řádek) a zalomeními řádků */
@@ -109,7 +109,7 @@ export function DoorModal({ door, email, preview, draft, entered, canPrev, canNe
       {door && (
         <div className="modal-card" key={door.day}>
           <button className="modal-close" aria-label="Zavřít" onClick={onClose}><X size={20} /></button>
-          <div className={'modal-head t-' + door.type + (door.type === 'finale' ? ' holo' : '')}>
+          <div className={'modal-head t-' + door.type + ' ' + packClass(door.day) + (door.type === 'finale' ? ' holo' : '')}>
             <div className="mh-card">
               <div className="mh-top"><b>{door.day}. 12.</b><i>{stars(door.type)}</i></div>
               <div className="mh-art">{typeIcon(door.type, 64)}<em className="sp s1" /><em className="sp s2" /><em className="sp s3" /></div>

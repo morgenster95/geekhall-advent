@@ -60,15 +60,15 @@ const CONF_MIN = 'Založit kód v e-shopu: sleva jen na produkty dané kategorie
 
 export const doors: Door[] = [
   {
-    day: 1, type: 'tip', title: 'Vítejte v adventu s Geek Hallem',
-    text: `Až do Štědrého dne na vás tady každý den čeká nové okénko. Slevy, hry, soutěže a tipy pro každého geeka.
+    day: 1, type: 'tip', title: 'Level 1: Vítejte v adventu',
+    text: `Hra začíná. Každou půlnoc tu čeká nový booster a v něm sleva, hra, tip nebo soutěž. Žádné prázdné obaly.
 
-Slevové kódy uplatníte v košíku e-shopu Geek Hall. U většiny z nich platí sleva jen na produkty z konkrétní kategorie, třeba na Warhammer, Pokémon nebo deskovky, a minimální hodnota nákupu se počítá jen z nich. Podmínky najdete vždy u kódu.
+Slevové kódy zahrajete v košíku e-shopu Geek Hall. U většiny platí sleva jen na produkty z jedné kategorie, třeba Warhammer, Pokémon nebo deskovky, a minimální nákup se počítá jen z nich. Podmínky najdete vždy u kódu.
 
-Dobrá zpráva na začátek: doprava je u nás zdarma při nákupu nad 3 000 Kč.
+Bonus na startu: doprava je u nás zdarma při nákupu nad 3 000 Kč.
 
-Všechno, co otevřete, najdete i později v sekci „Moje dárky“. Další okénko se odemyká vždy o půlnoci.`,
-    more: 'První slevu najdete hned zítra. Stačí odpovědět na čtyři otázky.',
+Co otevřete, to máte ve sbírce. Najdete to kdykoli v sekci „Moje karty“.`,
+    more: 'Zítra vás čeká první kvíz a s ním i první sleva. Rozbalte si ho.',
     ...shop,
   },
   {

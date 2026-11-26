@@ -4,11 +4,11 @@ import { availableDay, BASE, CATEGORIES, CONTACT_URL, CONTEST_DAYS, contestOpen,
 import { CONTENT_MODE, DEMO_MODE, PREVIEW_KEY } from './config';
 import { backend } from './backend';
 import type { Door, Progress, User } from './types';
-import { DoorGrid } from './components/DoorGrid';
+import { DoorGrid, LABELS, STARS } from './components/DoorGrid';
 import { DoorModal } from './components/DoorModal';
 import { LoginDialog } from './components/LoginDialog';
 import { GiftsDrawer } from './components/GiftsDrawer';
-import { DiceArt, Celebrate, Logo } from './components/Decor';
+import { DiceArt, Celebrate, Drift, Lights, Logo, PixelTree, Snow } from './components/Decor';
 import { HeroArt } from './components/HeroArt';
 
 const EVE = Date.parse('2026-12-24T00:00:00+01:00');
@@ -98,7 +98,8 @@ export default function App() {
     if (!user && !guest) { setLogin({ open: true, reason: 'Přihlaste se a otevřete okénko', pendingDay: day }); return; }
     if (!progress.opened[day]) {
       setOpening(day);
-      await new Promise((r) => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 550));
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(() => setBurst((b) => b + 1), 760);
+      await new Promise((r) => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1450));
       setOpening(null);
       setProgress((p) => { const n = { ...p, opened: { ...p.opened, [day]: new Date().toISOString() } }; if (!user) saveGuest(n); return n; });
       if (user) backend.markOpened(user, day, preview).catch(() => notify('Okénko se nepodařilo uložit k účtu. Zkuste to prosím znovu.'));
@@ -180,18 +181,26 @@ export default function App() {
 
       {/* ------------------------------------------------------------- HERO */}
       <section className="hero">
-        <DiceArt className="hero-dice" />
+        <Snow count={80} />
+        <Lights className="hero-lights" count={24} />
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <h1>Rozbalte si advent <span className="red">plný karet, slev a her</span> s námi!</h1>
-            <p>Každý den o půlnoci nová karta: sleva, hra, tip nebo soutěž. Slevové kódy uplatníte v e-shopu Geek Hall.</p>
+            <span className="hero-badge">Advent 2026 · Geek Hall edice</span>
+            <h1>24 boosterů <span className="grad">do Vánoc</span></h1>
+            <p>Každou půlnoc jeden nový. Uvnitř sleva, hra, tip, nebo soutěž.</p>
             <div className="hero-cta">
-              <a href="#kalendar" className="btn teal">{user || guest ? 'K mé sbírce' : 'Ke kalendáři'}</a>
+              <a href="#kalendar" className="btn teal">{user || guest ? 'Rozbalit dnešní booster' : 'Rozbalit první booster'}</a>
               {!user && !guest && <button className="btn pink" onClick={() => setLogin({ open: true })}>Přihlásit se</button>}
             </div>
+            <ul className="hero-chips" aria-label="Co v kalendáři najdete">
+              <li className="c1">13 slevových kódů</li>
+              <li className="c2">3 soutěže</li>
+              <li className="c3">1 legendární finále</li>
+            </ul>
           </div>
           <HeroArt />
         </div>
+        <Drift className="hero-drift" />
       </section>
 
       <div className="wrap countdown" aria-label="Odpočet do Štědrého dne">
@@ -206,8 +215,8 @@ export default function App() {
       {/* --------------------------------------------------------- CALENDAR */}
       <main>
         <section id="kalendar" className="calendar wrap">
-          <h2 className="sec-title">Adventní kalendář</h2>
-          <p className="sec-sub">Slevové kódy, kvízy, užitečné tipy a tři soutěže o skvělé výhry. Každá karta, kterou otočíte, zůstane ve vaší sbírce.</p>
+          <h2 className="sec-title">Rozbalte si booster</h2>
+          <p className="sec-sub">Klikněte na obal, roztrhněte ho a podívejte se, co z něj vypadlo. Každá karta zůstane ve vaší sbírce.</p>
           <div className="cal-bar">
             <div className="progress">
               <span>{user || guest ? <>Sbírka: <b>{openedCount}</b> z 24 karet</> : 'Přihlaste se a začněte sbírat'}</span>
@@ -216,7 +225,7 @@ export default function App() {
             <span className="status">{status}</span>
           </div>
           <DoorGrid max={max} opened={openedMap} opening={opening} onOpen={openDoor} />
-          <div className="legend" aria-hidden="true"><i className="t-offer" />Sleva<i className="t-game" />Hra<i className="t-tip" />Tip<i className="t-contest" />Soutěž<i className="t-finale" />Finále</div>
+          <div className="legend" aria-label="Vzácnost karet">{(['tip', 'game', 'offer', 'contest', 'finale'] as const).map((t) => <span key={t}><b>{'★'.repeat(STARS[t])}</b> {LABELS[t]}</span>)}</div>
           <div className="cal-foot">
             {user ? <span>Přihlášeni jako <b>{user.email}</b> · <button className="link" onClick={() => setDrawer(true)}>Moje karty</button></span>
               : !guest && <button className="btn pink" onClick={() => setLogin({ open: true })}><LogIn size={17} /> Přihlásit se a začít</button>}
@@ -226,14 +235,14 @@ export default function App() {
         <section className="how wrap">
           <h2 className="sec-title">Jak to funguje</h2>
           <ul className="why">
-            <li><UserRound /><span>Přihlaste se jedním klikem přes Google</span></li>
-            <li><Layers /><span>Každý den o půlnoci otočte novou kartu</span></li>
-            <li><ShoppingCart /><span>Slevový kód zadejte v košíku e-shopu</span></li>
+            <li className="w1"><i><UserRound /></i><span>Přihlaste se jedním klikem přes Google</span></li>
+            <li className="w2"><i><Layers /></i><span>Každou půlnoc roztrhněte nový booster</span></li>
+            <li className="w3"><i><ShoppingCart /></i><span>Kód z karty zahrajte v košíku e-shopu</span></li>
           </ul>
         </section>
 
         <section className="cats wrap" aria-label="Kategorie">
-          <h2 className="sec-title">Kategorie</h2>
+          <h2 className="sec-title">Kam s lootem?</h2>
           <div className="cat-grid">
             <a className="cat" href={SHOP + 'kategorie/sberatelske-hry-2/pokemoni/'}><img src={BASE + 'img/pikachu.png'} alt="" loading="lazy" />Pokémoni</a>
             <a className="cat" href={SHOP + 'kategorie/deskove-hry/'}><img src={BASE + 'img/strategicke.jpg'} alt="" loading="lazy" />Deskové hry</a>
@@ -242,6 +251,11 @@ export default function App() {
             <a className="cat" href={SHOP + 'kategorie/merch/'}><img src={BASE + 'img/potter.jpeg'} alt="" loading="lazy" />Harry Potter</a>
             <a className="cat" href={SHOP + 'kategorie/doplnky-a-prislusenstvi/'}><img src={BASE + 'img/kostky.jpeg'} alt="" loading="lazy" />Doplňky a příslušenství</a>
           </div>
+        </section>
+        <section className="closing">
+          <div className="closing-tree"><PixelTree /></div>
+          <h2>Ať vám padají samé legendárky!</h2>
+          <p>Veselé Vánoce přeje tým Geek Hall.</p>
         </section>
       </main>
 
