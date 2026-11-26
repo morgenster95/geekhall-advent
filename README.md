@@ -1,23 +1,47 @@
-# Adventní kalendář 2026 – Geekhall
+# Adventní kalendář 2026 – Geek Hall
 
-Kopie adventního kalendáře Mobil Maják (Vite + React + TypeScript + Firebase) přepracovaná pro e-shop Geekhall.
+Kopie adventního kalendáře Mobil Maják (Vite + React + TypeScript + Firebase) přepracovaná pro e-shop Geek Hall (geekhall.cz: logo, písmo Roboto, barvy a obrázky převzaté z webu).
 Princip a funkce jsou stejné: 24 okének odemykaných o půlnoci (Europe/Prague), přihlášení přes Google, kvízy a hry
 (kvíz, řazení přetahováním, typový test), 3 soutěže (e-mail / tip čísla / fotka) s uzávěrkami i ve `firestore.rules`,
 newsletterový souhlas (datum + znění), `/?admin` s exportem CSV, pravidla soutěží `/?pravidla`.
-Rozdíl: e-shop místo poboček – odměny jsou **slevové kódy `GEEK-xx` do košíku**.
+Rozdíl: e-shop místo poboček – odměny jsou **slevové kódy `GEEK-…` do košíku** (seznam níže).
 
 ## Co je potřeba doplnit před spuštěním
 
 - [ ] **Firebase projekt** (viz níže) a `FIREBASE` v `src/config.ts`. Dokud je `apiKey` prázdný, web běží v ukázkovém režimu (data jen v prohlížeči).
-- [ ] **Provozovatel** (`OPERATOR` v `src/content.ts`): firma, sídlo, IČ, DIČ, e-mail – zobrazí se v patičce a pravidlech.
+- [ ] **Provozovatel** (`OPERATOR` v `src/content.ts`): firma, IČ a adresa prodejny jsou převzaté z patičky geekhall.cz (Svět karet s.r.o., IČO 11858770). Ověřit sídlo a doplnit DIČ.
 - [ ] **Texty a nabídky v `src/content.ts`** jsou návrh (slevy, ceny soutěží, termíny). Každé okénko s poznámkou `confirm` ověřit a pak přepnout `CONTENT_MODE = 'live'`.
 - [ ] Soutěž 13: doplnit skutečný počet odeslaných balíků za rok 2026. Ceny soutěží (3 000 / 1 000 / 2 000 Kč) potvrdit i v `src/components/Rules.tsx`.
-- [ ] Odkazy: `PRIVACY_URL`, `CONTACT_URL`, odkazy na kategorie v okénkách 8 a 20 (odhad adres geekhall.cz).
-- [ ] Kódy `GEEK-01` … `GEEK-24` vytvořit v e-shopu jako slevové kupóny podle textů okének.
-- [ ] Logo: zatím textový logotyp v `src/components/Decor.tsx` (`Logo`). Oficiální SVG logo vložit tam, `public/favicon.svg` také.
-- [ ] Barvy: tokeny `:root` v `src/styles.css` (zatím fialová + azurová) upravit podle značky.
+- [x] Odkazy na kategorie, kontakt a ochranu údajů odpovídají skutečným adresám geekhall.cz (stav z 26. 11. 2026).
+- [ ] Kódy z tabulky níže (a `docs/slevove-kody.csv`) založit v e-shopu jako slevové kupóny.
+- [x] Logo (`public/img/logo-white.png`, `logo-black.svg`), barvy a písmo převzaté z geekhall.cz. Ověřit s majitelem značky, že lze obrázky z e-shopu v kalendáři použít.
 - [ ] Správce: Google e-mail v `ADMIN_EMAILS` (`src/config.ts`) **i** v `isAdmin()` ve `firestore.rules`.
 - [ ] `DEMO_MODE = false` (výchozí), `PREVIEW_KEY` (`?nahled=geekadvent` odemkne všechna okénka).
+
+## Slevové kódy (14)
+
+Podmínky vycházejí z domluvených odměn. Sleva „do hodnoty objednávky“ znamená, že kód platí jen pro objednávky v uvedeném rozmezí.
+Stejné údaje jsou v `docs/slevove-kody.csv` (středník, UTF-8) pro import nebo ruční založení v e-shopu.
+
+| Okénko | Kód | Odměna | Platí na | Minimální nákup | Max. objednávka | Platnost |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1. 12. | `GEEK-NULKA` | Dárek: plechovka Kofola Nulka zdarma | celý nákup | od 1 000 Kč | – | 31. 12. 2026 |
+| 2. 12. | `GEEK-D20` | Sleva 5 % | celý nákup | od 2 000 Kč | do 10 000 Kč | 31. 12. 2026 |
+| 4. 12. | `GEEK-SOSKA` | Sleva 5 % | figurky a sošky | od 1 000 Kč | – | 31. 12. 2026 |
+| 7. 12. | `GEEK-SILA` | Sleva 10 % | produkty Star Wars | od 2 000 Kč | do 10 000 Kč | 31. 12. 2026 |
+| 9. 12. | `GEEK-KOSTKA` | Sleva 5 % | deskové hry | od 1 000 Kč | – | 31. 12. 2026 |
+| 11. 12. | `GEEK-STETEC` | Sleva 10 % | barvení a modelařství | od 1 000 Kč | – | 31. 12. 2026 |
+| 12. 12. | `GEEK-PLYSAK` | Sleva 10 % | plyšáci | bez minima | – | 31. 12. 2026 |
+| 14. 12. | `GEEK-WAAAGH` | Sleva 10 % | Warhammer (40k, Age of Sigmar) | od 3 000 Kč | do 10 000 Kč | 31. 12. 2026 |
+| 17. 12. | `GEEK-BRADAVICE` | Sleva 10 % | produkty Harry Potter | od 2 000 Kč | do 10 000 Kč | 31. 12. 2026 |
+| 18. 12. | `GEEK-POKEBALL` | Sleva 5 % | Pokémon TCG | od 4 000 Kč | do 10 000 Kč | 31. 12. 2026 |
+| 21. 12. | `GEEK-POKLAD` | Sleva 5 % | One Piece TCG | od 4 000 Kč | do 10 000 Kč | 31. 12. 2026 |
+| 22. 12. | `GEEK-ZERG` | Sleva 10 % | produkty StarCraft | od 2 000 Kč | do 10 000 Kč | 31. 12. 2026 |
+| 23. 12. | `GEEK-LOOT` | Sleva 5 % | celý nákup | od 2 000 Kč | do 10 000 Kč | 24. 12. 2026 |
+| 24. 12. | `GEEK-LEGENDA` | Sleva 10 % | celý nákup | od 5 000 Kč | do 10 000 Kč | 31. 1. 2027 |
+
+K ověření: zda se minimální nákup počítá z celého košíku, nebo jen z produktů dané kategorie (u textů je uvedeno „při nákupu nad X Kč“), a jak e-shop řeší dárek k objednávce (Kofola Nulka).
+Zadání obsahovalo dvakrát stejnou slevu 5 % při nákupu nad 2 000 Kč do 10 000 Kč, proto jsou kódy dva: `GEEK-D20` (odměna za kvíz v okénku 2) a `GEEK-LOOT` (okénko 23).
 
 ## Firebase (jednorázově, cca 15 min)
 

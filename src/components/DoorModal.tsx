@@ -121,6 +121,13 @@ export function DoorModal({ door, email, preview, draft, entered, canPrev, canNe
             <h2>{door.title}</h2>
             <Rich className="lead" text={door.text} />
 
+            {door.image && (
+              <figure className="door-image">
+                <img src={door.image.src} alt={door.image.alt} loading="lazy" decoding="async" />
+                {door.image.caption && <figcaption>{door.image.caption}</figcaption>}
+              </figure>
+            )}
+
             {door.list && (
               <ol className="steps">
                 {door.list.map((x, k) => (
@@ -159,7 +166,7 @@ export function DoorModal({ door, email, preview, draft, entered, canPrev, canNe
                     <button onClick={() => onCopy(door.coupon!.code!)}><Copy size={16} /> Kopírovat</button>
                   </div>
                 ) : (
-                  <div className="coupon-row secret"><span>Tajný kupón Geekhall · {door.day}. prosince</span></div>
+                  <div className="coupon-row secret"><span>Tajný kupón Geek Hall · {door.day}. prosince</span></div>
                 )}
                 <small>{door.coupon.valid.replace(/\.$/, '')}. Kód zadejte v košíku e-shopu.</small>
                 <small>Kupón máte uložený i v sekci <b>Moje dárky</b>.</small>
@@ -193,7 +200,7 @@ export function DoorModal({ door, email, preview, draft, entered, canPrev, canNe
                     )}
                     <label htmlFor="contact">Váš e-mail</label>
                     <input id="contact" name="contact" type="email" required maxLength={254} defaultValue={email} autoComplete="email" />
-                    <label className="check"><input type="checkbox" required /> <span>Souhlasím s <a href={RULES_URL} target="_blank" rel="noreferrer">pravidly soutěže</a> a se zpracováním osobních údajů{c.kind === 'photo' ? ', včetně zveřejnění fotky bez jména na webu a sociálních sítích Mobil Maják' : ''}.</span></label>
+                    <label className="check"><input type="checkbox" required /> <span>Souhlasím s <a href={RULES_URL} target="_blank" rel="noreferrer">pravidly soutěže</a> a se zpracováním osobních údajů{c.kind === 'photo' ? ', včetně zveřejnění fotky bez jména na webu a sociálních sítích Geek Hall' : ''}.</span></label>
                     {formError && <div className="form-error" role="alert">{formError}</div>}
                     <button className="btn primary" disabled={busy || photoBusy}>{busy ? 'Odesílám…' : c.kind === 'email' ? 'Zapojit se do soutěže' : c.kind === 'photo' ? 'Odeslat fotku' : 'Odeslat tip'} <ArrowRight size={17} /></button>
                   </form>

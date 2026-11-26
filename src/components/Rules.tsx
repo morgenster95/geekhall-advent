@@ -10,12 +10,12 @@ export function Rules() {
     <main className="rules-page wrap">
       <article className="rules-card">
         <a href="./" className="rules-logo"><Logo /></a>
-        <h1>Pravidla soutěží Adventního kalendáře Geekhall 2026</h1>
+        <h1>Pravidla soutěží Adventního kalendáře Geek Hall 2026</h1>
 
         <h2>Společná pravidla (platí pro všechny 3 soutěže)</h2>
 
         <h3>Pořadatel</h3>
-        <p>Pořadatelem soutěží v adventním kalendáři Geekhall je společnost <b>{OPERATOR.name}</b>, se sídlem {OPERATOR.address}, IČ: {OPERATOR.ico} (dále jen „pořadatel“).</p>
+        <p>Pořadatelem soutěží v adventním kalendáři Geek Hall je společnost <b>{OPERATOR.name}</b>, se sídlem {OPERATOR.address}, IČ: {OPERATOR.ico} (dále jen „pořadatel“).</p>
 
         <h3>Kdo se může zapojit</h3>
         <p>Soutěží se může zúčastnit fyzická osoba starší 18 let s doručovací adresou v České republice. Ze soutěží jsou vyloučeni zaměstnanci pořadatele a jejich blízké osoby.</p>
@@ -39,7 +39,7 @@ export function Rules() {
         <ul>
           <li><b>Doba konání:</b> od 5. 12. 2026 do 23. 12. 2026 do 23:59.</li>
           <li><b>Jak se zapojit:</b> v okénku 5. 12. adventního kalendáře vyplnit e-mail a potvrdit souhlas s pravidly.</li>
-          <li><b>Výhra:</b> 1× dárkový poukaz do e-shopu Geekhall v hodnotě 3 000 Kč.</li>
+          <li><b>Výhra:</b> 1× dárkový poukaz do e-shopu Geek Hall v hodnotě 3 000 Kč.</li>
           <li><b>Výběr výherce:</b> výherce vylosujeme náhodně ze všech platných přihlášek 24. 12. 2026 a týž den mu pošleme e-mail.</li>
         </ul>
 
@@ -47,8 +47,8 @@ export function Rules() {
         <ul>
           <li><b>Doba konání:</b> od 13. 12. 2026 do 18. 12. 2026 do 23:59.</li>
           <li><b>Jak se zapojit:</b> v okénku 13. 12. adventního kalendáře zadat číselný tip a e-mail a potvrdit souhlas s pravidly.</li>
-          <li><b>Výhra:</b> 1× dárkový poukaz do e-shopu Geekhall v hodnotě 1 000 Kč, platný do 31. 1. 2027.</li>
-          <li><b>Výběr výherce:</b> vyhrává účastník, jehož tip je nejblíže počtu balíčků, které Geekhall odeslal v roce 2026 podle evidence pořadatele. Při stejně blízkých tipech vyhrává ten, který byl odeslán dříve.</li>
+          <li><b>Výhra:</b> 1× dárkový poukaz do e-shopu Geek Hall v hodnotě 1 000 Kč, platný do 31. 1. 2027.</li>
+          <li><b>Výběr výherce:</b> vyhrává účastník, jehož tip je nejblíže počtu balíčků, které Geek Hall odeslal v roce 2026 podle evidence pořadatele. Při stejně blízkých tipech vyhrává ten, který byl odeslán dříve.</li>
           <li><b>Vyhlášení:</b> výherce vyhlásíme 21. 12. 2026 a pošleme mu e-mail.</li>
         </ul>
 
@@ -56,9 +56,9 @@ export function Rules() {
         <ul>
           <li><b>Doba konání:</b> od 19. 12. 2026 do 22. 12. 2026 do 23:59.</li>
           <li><b>Jak se zapojit:</b> v okénku 19. 12. adventního kalendáře nahrát fotografii vlastního geek koutku, vyplnit e-mail a potvrdit souhlas s pravidly. Fotografie musí být vlastní a neupravená.</li>
-          <li><b>Výhra:</b> 1× dárkový poukaz do e-shopu Geekhall v hodnotě 2 000 Kč, platný do 31. 1. 2027.</li>
+          <li><b>Výhra:</b> 1× dárkový poukaz do e-shopu Geek Hall v hodnotě 2 000 Kč, platný do 31. 1. 2027.</li>
           <li><b>Výběr výherce:</b> výherce vybere komise pořadatele podle toho, který koutek je nejoriginálnější.</li>
-          <li><b>Fotografie:</b> účastník uděluje pořadateli bezplatný a nevýhradní souhlas se zveřejněním zaslané fotografie bez uvedení jména na webu a sociálních sítích Geekhall.</li>
+          <li><b>Fotografie:</b> účastník uděluje pořadateli bezplatný a nevýhradní souhlas se zveřejněním zaslané fotografie bez uvedení jména na webu a sociálních sítích Geek Hall.</li>
           <li><b>Vyhlášení:</b> výherce vyhlásíme 23. 12. 2026 a pošleme mu e-mail.</li>
         </ul>
 

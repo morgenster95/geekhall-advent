@@ -4,9 +4,10 @@ Tento projekt je kopie adventního kalendáře Mobil Maják (Vite + React + Type
 
 ## Stav
 - Hotovo: rebrand (fialová paleta, textové logo GEEKHALL, pixelový motiv v patičce), nových 24 okének (`src/content.ts`), pravidla soutěží (`src/components/Rules.tsx`), README s kontrolním seznamem. `npm run build` prochází.
-- Odměny = slevové kódy `GEEK-01` až `GEEK-24` zadávané v košíku e-shopu (žádné pobočky).
-- Zbývá: GitHub repo (`databali4market-art/geekhall-advent`, prázdné, push z původní session nešel), Firebase projekt a jeho config do `src/config.ts`, doplnění provozovatele (`OPERATOR` v `src/content.ts`), ověření všech nabídek (okénka s poznámkou `confirm`), logo a barvy podle značky, kódy v e-shopu, pak `CONTENT_MODE = 'live'`.
-- Geekhall.cz nebyl při tvorbě dostupný, sortiment, odkazy a nabídky jsou odhad.
+- Odměny = 14 slevových kódů (`GEEK-NULKA`, `GEEK-D20`, `GEEK-WAAAGH` …, seznam v `README.md` a `docs/slevove-kody.csv`) zadávaných v košíku e-shopu.
+- Vzhled (logo, písmo Roboto, barvy `#202124` / `#dc3545` / `#35dccc`, obrázky) je převzatý z geekhall.cz, repo je na GitHubu `morgenster95/geekhall-advent`.
+- Zbývá: Firebase projekt a jeho config do `src/config.ts`, doplnění provozovatele (`OPERATOR` v `src/content.ts`), ověření všech nabídek (okénka s poznámkou `confirm`), kódy v e-shopu, pak `CONTENT_MODE = 'live'`.
+- Odkazy a kategorie jsou ověřené proti geekhall.cz (26. 11. 2026), podmínky slev a Kofola Nulka k ověření (poznámky `confirm`).
 
 ## Jak pokračovat
 1. `npm install && npm run dev`, náhled všech okének na `/?nahled=geekadvent`.

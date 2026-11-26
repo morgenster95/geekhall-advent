@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Eye, Gift, Snowflake, LogIn, Mail, Share2, Sparkles, Truck, Gamepad2, Gem } from 'lucide-react';
-import { availableDay, BASE, CONTACT_URL, CONTEST_DAYS, contestOpen, doors as ALL_DOORS, OPERATOR, PRIVACY_URL, RULES_URL, SHOP } from './content';
+import { ArrowRight, ArrowUpRight, Eye, Gift, Snowflake, LogIn, Share2, Sparkles, Truck, Gamepad2, Gem } from 'lucide-react';
+import { availableDay, BASE, CATEGORIES, CONTACT_URL, CONTEST_DAYS, contestOpen, doors as ALL_DOORS, OPERATOR, PRIVACY_URL, RULES_URL, SHOP } from './content';
 import { CONTENT_MODE, DEMO_MODE, PREVIEW_KEY } from './config';
 import { backend } from './backend';
 import type { Door, Progress, User } from './types';
@@ -8,7 +8,7 @@ import { DoorGrid } from './components/DoorGrid';
 import { DoorModal } from './components/DoorModal';
 import { LoginDialog } from './components/LoginDialog';
 import { GiftsDrawer } from './components/GiftsDrawer';
-import { BeaconA, Celebrate, Drift, Lights, Logo, Snow } from './components/Decor';
+import { DiceArt, Celebrate, Drift, Lights, Logo, Snow } from './components/Decor';
 import { HeroArt } from './components/HeroArt';
 
 const EVE = Date.parse('2026-12-24T00:00:00+01:00');
@@ -129,7 +129,7 @@ export default function App() {
     const url = new URL(location.origin + BASE);
     if (modalDay) url.searchParams.set('den', String(modalDay));
     try {
-      if (navigator.share) { await navigator.share({ title: 'Adventní kalendář Geekhall', text: '24 dní, 24 překvapení: slevy, hry, tipy a soutěže až do Štědrého dne.', url: url.href }); return; }
+      if (navigator.share) { await navigator.share({ title: 'Adventní kalendář Geek Hall', text: '24 dní, 24 překvapení: slevy, hry, tipy a soutěže až do Štědrého dne.', url: url.href }); return; }
       await navigator.clipboard.writeText(url.href);
       notify('Odkaz je zkopírovaný. Pošlete ho dál.');
     } catch (e) { if ((e as Error).name !== 'AbortError') notify('Sdílení se nepodařilo. Odkaz zkopírujte z adresního řádku.'); }
@@ -159,14 +159,13 @@ export default function App() {
 
       <div className="utility">
         <div className="wrap">
-          <nav aria-label="Odkazy na web"><a href={SHOP}>E-shop</a><a href={CONTACT_URL}>Kontakt</a></nav>
           <span className="reg-pill">Adventní kalendář 2026</span>
+          <nav aria-label="Odkazy na web"><span className="hide-sm">Doprava ZDARMA nad 3 000 Kč</span><a href={SHOP + 'prodejna-geek-hall/'}>Naše prodejna</a><a href="mailto:info@geekhall.cz">info@geekhall.cz</a><a className="hide-sm" href="tel:+420606373676">+420 606 373 676</a></nav>
         </div>
       </div>
       <header className="topbar">
         <div className="wrap">
-          <a href={SHOP} className="brand" aria-label="Geekhall – e-shop"><Logo /></a>
-          <a className="call" href={CONTACT_URL}><Mail size={22} /><span><b>Poradíme vám</b><small>Kontakt na zákaznickou podporu</small></span></a>
+          <a href={SHOP} className="brand" aria-label="Geek Hall – e-shop"><Logo light /></a>
           <nav className="actions" aria-label="Ovládání">
             <button className="chip" onClick={share} aria-label="Sdílet kalendář"><Share2 size={16} /></button>
             {user || guest ? (
@@ -177,7 +176,7 @@ export default function App() {
           </nav>
         </div>
       </header>
-      <div className="mainnav"><div className="wrap"><a href={SHOP}>Figurky a sběratelské</a><a href={SHOP}>Hry a gaming</a><a href={SHOP}>Deskovky</a><a href={SHOP}>Oblečení a hrnky</a><a href={SHOP}>Dárkové poukazy</a><span className="here">Adventní kalendář</span></div></div>
+      <div className="mainnav"><div className="wrap">{CATEGORIES.map((c) => <a key={c.url} href={c.url}>{c.label}</a>)}<a className="sale" href={SHOP + 'akce/'}>Akce</a><span className="here">Adventní kalendář</span></div></div>
 
       {/* ------------------------------------------------------------- HERO */}
       <section className="hero">
@@ -187,7 +186,7 @@ export default function App() {
           <div className="hero-copy">
             <div className="eyebrow light"><Snowflake size={15} /> Adventní kalendář 2026</div>
             <h1><span className="hl">Advent</span><br />plný slev, her<br />a překvapení</h1>
-            <p>24 dní, 24 okének. Každý den o půlnoci se odemkne nová nabídka, hra, tip nebo soutěž. Slevové kódy uplatníte v e-shopu Geekhall.</p>
+            <p>24 dní, 24 okének. Každý den o půlnoci se odemkne nová nabídka, hra, tip nebo soutěž. Slevové kódy uplatníte v e-shopu Geek Hall.</p>
             <div className="hero-cta">
               <a href="#kalendar" className="btn pink big">{user || guest ? 'Ke kalendáři' : 'Vstoupit do kalendáře'} <ArrowRight size={18} /></a>
               {!user && !guest && <button className="btn ghost" onClick={() => setLogin({ open: true })}><LogIn size={17} /> Přihlásit se</button>}
@@ -241,20 +240,20 @@ export default function App() {
         </section>
 
         <section className="services wrap">
-          <a href={SHOP}><Gem size={26} /><strong>Sběratelské kousky</strong><span>Figurky, sběratelské předměty a dárky pro fanoušky.</span><ArrowUpRight size={18} /></a>
-          <a href={SHOP}><Gamepad2 size={26} /><strong>Hry a gaming</strong><span>Herní doplňky, deskovky a dárky pro hráče.</span><ArrowUpRight size={18} /></a>
-          <a href={CONTACT_URL}><Truck size={26} /><strong>Doprava a kontakt</strong><span>Poradíme s výběrem i doručením před Vánoci.</span><ArrowUpRight size={18} /></a>
+          <a href={SHOP + 'kategorie/sberatelske-hry-2/'}><Gem size={26} /><strong>Sběratelské hry</strong><span>Pokémon, One Piece, Lorcana, Magic a další karetní hry.</span><ArrowUpRight size={18} /></a>
+          <a href={SHOP + 'kategorie/deskove-hry/'}><Gamepad2 size={26} /><strong>Deskové hry</strong><span>Strategické, rodinné, párty i kooperativní hry na dlouhé zimní večery.</span><ArrowUpRight size={18} /></a>
+          <a href={CONTACT_URL}><Truck size={26} /><strong>Kontakt a doprava</strong><span>Doprava zdarma nad 3 000 Kč. Poradíme s výběrem i doručením před Vánoci.</span><ArrowUpRight size={18} /></a>
         </section>
 
         <section className="closing">
           <Drift className="closing-drift" />
           <Snowflake size={30} />
-          <h2>Krásný advent přeje <span className="hl">tým Geekhall</span></h2>
+          <h2>Krásný advent přeje <span className="hl">tým Geek Hall</span></h2>
         </section>
       </main>
 
       <footer className="footer">
-        <BeaconA className="footer-beacon" />
+        <DiceArt className="footer-dice" />
         <div className="wrap">
           <Logo light />
           <div className="footer-links">
@@ -265,9 +264,9 @@ export default function App() {
           </div>
           <div id="soukromi" className="privacy">
             <h3>Soukromí</h3>
-            <p>Správcem osobních údajů je {OPERATOR.name} (Geekhall), IČ {OPERATOR.ico}. Pro přihlášení a ukládání dat používáme službu Firebase (Google). Ukládáme váš e-mail a jméno z účtu Google, která okénka jste otevřeli, soutěžní odpovědi (u soutěže o nejlepší geek koutek i zaslanou fotku) a to, zda chcete dostávat novinky. Údaje slouží jen k provozu adventního kalendáře a vyhodnocení soutěží; e-mailem s novinkami vás oslovíme jen tehdy, pokud jste k tomu dali souhlas (odvolat ho můžete kdykoli v sekci Moje dárky). Údaje z kalendáře uchováváme do 31. 3. 2027 (soutěžní údaje 3 měsíce od vyhlášení výsledků), kontakty se souhlasem do jeho odvolání. Web nepoužívá analytické ani reklamní cookies. Více v <a href={PRIVACY_URL} target="_blank" rel="noreferrer">zásadách ochrany osobních údajů</a>.</p>
+            <p>Správcem osobních údajů je {OPERATOR.name} (Geek Hall), IČ {OPERATOR.ico}. Pro přihlášení a ukládání dat používáme službu Firebase (Google). Ukládáme váš e-mail a jméno z účtu Google, která okénka jste otevřeli, soutěžní odpovědi (u soutěže o nejlepší geek koutek i zaslanou fotku) a to, zda chcete dostávat novinky. Údaje slouží jen k provozu adventního kalendáře a vyhodnocení soutěží; e-mailem s novinkami vás oslovíme jen tehdy, pokud jste k tomu dali souhlas (odvolat ho můžete kdykoli v sekci Moje dárky). Údaje z kalendáře uchováváme do 31. 3. 2027 (soutěžní údaje 3 měsíce od vyhlášení výsledků), kontakty se souhlasem do jeho odvolání. Web nepoužívá analytické ani reklamní cookies. Více v <a href={PRIVACY_URL} target="_blank" rel="noreferrer">zásadách ochrany osobních údajů</a>.</p>
           </div>
-          <small>© 2026 Geekhall · Provozovatel: {OPERATOR.name}, {OPERATOR.address}, IČ {OPERATOR.ico} · Okénka se odemykají o půlnoci (Europe/Prague)</small>
+          <small>© 2026 Geek Hall · Provozovatel: {OPERATOR.name}, {OPERATOR.address}, IČ {OPERATOR.ico} · Okénka se odemykají o půlnoci (Europe/Prague)</small>
         </div>
       </footer>
 

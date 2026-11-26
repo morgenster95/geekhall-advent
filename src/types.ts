@@ -33,11 +33,13 @@ export interface Door {
   title: string;
   /** úvodní text; prázdný řádek = nový odstavec */
   text: string;
+  /** ilustrační obrázek (např. produkt z e-shopu) */
+  image?: Img;
   /** číslovaný seznam (tipy, kroky) */
   list?: ListItem[];
   /** text pod seznamem; prázdný řádek = nový odstavec, jednotlivé řádky zůstávají pod sebou */
   more?: string;
-  /** kupón k předložení na pobočce (bez kódu = stačí ukázat okénko) */
+  /** slevový kód do košíku e-shopu (bez kódu = tajný kupón, stačí ukázat okénko) */
   coupon?: { code?: string; value: string; valid: string };
   game?: Game;
   contest?: Contest;

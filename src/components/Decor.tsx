@@ -1,22 +1,21 @@
 import { useEffect, useRef } from 'react';
 
-/** Logotyp GEEKHALL (textový; výměnou za oficiální SVG logo ho lze nahradit). light = varianta na tmavé pozadí. */
+/** Oficiální logo Geek Hall z geekhall.cz. light = bílá varianta na tmavé pozadí. */
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <span className={'logo' + (light ? ' light' : '')} role="img" aria-label="Geekhall">
-      <svg viewBox="0 0 330 56" aria-hidden="true">
-        <text x="0" y="44" fontFamily="'Open Sans Variable','Open Sans',system-ui,sans-serif" fontWeight="800" fontSize="50" letterSpacing="1" fill="currentColor">GEEK<tspan fill="#7c3aed">HALL</tspan></text>
-      </svg>
+    <span className={'logo' + (light ? ' light' : '')}>
+      <img src={import.meta.env.BASE_URL + 'img/' + (light ? 'logo-white.png' : 'logo-black.svg')} alt="Geek Hall" />
     </span>
   );
 }
 
-/** Pixelový „vetřelec“ jako velká silueta v pozadí patičky. */
-export function BeaconA({ className = '' }: { className?: string }) {
-  const rows = ['00100000100', '00010001000', '00111111100', '01101110110', '11111111111', '10111111101', '10100000101', '00011011000'];
+/** Hrací kostky jako velká silueta v pozadí (motiv převzatý z úvodu geekhall.cz). */
+export function DiceArt({ className = '' }: { className?: string }) {
+  const pip = (x: number, y: number) => <circle key={x + '-' + y} cx={x} cy={y} r="5.5" fill="#202124" />;
   return (
-    <svg className={'beacon-a ' + className} viewBox="0 0 11 8" aria-hidden="true">
-      {rows.flatMap((r, y) => [...r].map((c, x) => (c === '1' ? <rect key={x + '-' + y} x={x} y={y} width="1" height="1" /> : null)))}
+    <svg className={'dice-art ' + className} viewBox="0 0 260 150" aria-hidden="true">
+      <g transform="rotate(-14 70 80)"><rect x="10" y="30" width="100" height="100" rx="20" fill="currentColor" />{[[35, 55], [85, 55], [60, 80], [35, 105], [85, 105]].map(([x, y]) => pip(x, y))}</g>
+      <g transform="rotate(18 190 70)"><rect x="140" y="20" width="90" height="90" rx="18" fill="currentColor" />{[[165, 45], [205, 45], [165, 85], [205, 85]].map(([x, y]) => pip(x, y))}</g>
     </svg>
   );
 }
@@ -61,7 +60,7 @@ export function Snow({ count = 55 }: { count?: number }) {
 /** Konfety při otevření okénka nebo splnění hry. */
 export function Celebrate({ burst }: { burst: number }) {
   if (!burst) return null;
-  const colors = ['#7c3aed', '#29b6f6', '#ffffff', '#ffb020', '#2ecc71'];
+  const colors = ['#dc3545', '#35dccc', '#ffffff', '#ffb020', '#2ecc71'];
   return (
     <div className="celebrate" key={burst} aria-hidden="true">
       {Array.from({ length: 34 }, (_, i) => (
@@ -79,7 +78,7 @@ export function Celebrate({ burst }: { burst: number }) {
 
 /** Světelný řetěz: žárovky na prověšeném drátku, které se střídavě rozsvěcují. */
 export function Lights({ count = 16, className = '' }: { count?: number; className?: string }) {
-  const colors = ['#7c3aed', '#ffd166', '#22d3ee', '#3ddc84'];
+  const colors = ['#dc3545', '#ffd166', '#35dccc', '#3ddc84'];
   return (
     <div className={'lights ' + className} aria-hidden="true" style={{ ['--n' as string]: count }}>
       {Array.from({ length: count }, (_, i) => (

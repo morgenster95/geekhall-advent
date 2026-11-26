@@ -5,7 +5,7 @@
  */
 
 const TYPES = ['offer', 'game', 'tip', 'contest'] as const;
-const BULBS = ['#ffd166', '#7c3aed', '#22d3ee', '#3ddc84'];
+const BULBS = ['#ffd166', '#dc3545', '#35dccc', '#3ddc84'];
 
 type P = [number, number];
 /** bod na kubické Bézierově křivce */
@@ -96,13 +96,13 @@ function FirBranch() {
       <path d="M110 62v54M230 92v34" stroke="#ffd166" strokeWidth="1.2" />
       <g transform="translate(110 132)">
         <rect x="-5" y="-20" width="10" height="7" rx="2" fill="#ffd166" />
-        <circle r="17" fill="#7c3aed" />
+        <circle r="17" fill="#dc3545" />
         <path d="M-17 0a17 6 0 0 0 34 0" fill="none" stroke="#ffd166" strokeWidth="2" opacity=".9" />
         <circle cx="-6" cy="-6" r="5" fill="#fff" opacity=".45" />
       </g>
       <g transform="translate(230 140)">
         <rect x="-4" y="-16" width="8" height="6" rx="2" fill="#ffd166" />
-        <circle r="13" fill="#22d3ee" />
+        <circle r="13" fill="#35dccc" />
         <path d="M-9-5l18 10M-9 5l18-10" stroke="#fff" strokeWidth="1.6" opacity=".55" />
         <circle cx="-4" cy="-5" r="3.5" fill="#fff" opacity=".5" />
       </g>
@@ -115,22 +115,22 @@ function Gifts() {
     <svg className="ha-gifts" viewBox="0 0 230 150" aria-hidden="true">
       <ellipse cx="118" cy="142" rx="110" ry="8" fill="#000" opacity=".25" />
       {/* velký růžový */}
-      <rect x="10" y="62" width="104" height="80" rx="6" fill="#7c3aed" />
+      <rect x="10" y="62" width="104" height="80" rx="6" fill="#dc3545" />
       <rect x="10" y="62" width="104" height="80" rx="6" fill="url(#gShade)" />
       <rect x="4" y="50" width="116" height="20" rx="5" fill="#a78bfa" />
       <rect x="54" y="50" width="16" height="92" fill="#ffd166" />
       <path d="M62 50c-12-22-36-24-36-10 0 9 20 12 36 10Zm0 0c12-22 36-24 36-10 0 9-20 12-36 10Z" fill="#ffd166" stroke="#e9b23e" strokeWidth="1.5" />
       {/* modrý */}
-      <rect x="120" y="84" width="74" height="58" rx="5" fill="#22d3ee" />
+      <rect x="120" y="84" width="74" height="58" rx="5" fill="#35dccc" />
       <rect x="120" y="84" width="74" height="58" rx="5" fill="url(#gShade)" />
       <rect x="116" y="76" width="82" height="15" rx="4" fill="#5cc8f0" />
       <rect x="150" y="76" width="13" height="66" fill="#fff" />
-      <path d="M156 76c-8-15-26-17-26-7 0 7 14 8 26 7Zm0 0c8-15 26-17 26-7 0 7-14 8-26 7Z" fill="#fff" stroke="#d6e6f5" strokeWidth="1.2" />
+      <path d="M156 76c-8-15-26-17-26-7 0 7 14 8 26 7Zm0 0c8-15 26-17 26-7 0 7-14 8-26 7Z" fill="#fff" stroke="#dfe3e8" strokeWidth="1.2" />
       {/* malý zlatý */}
       <rect x="182" y="112" width="42" height="30" rx="4" fill="#ffb020" />
       <rect x="179" y="106" width="48" height="10" rx="3" fill="#ffc94d" />
-      <rect x="198" y="106" width="9" height="36" fill="#7c3aed" />
-      <path d="M202 106c-5-9-15-10-15-4 0 4 8 5 15 4Zm0 0c5-9 15-10 15-4 0 4-8 5-15 4Z" fill="#7c3aed" />
+      <rect x="198" y="106" width="9" height="36" fill="#dc3545" />
+      <path d="M202 106c-5-9-15-10-15-4 0 4 8 5 15 4Zm0 0c5-9 15-10 15-4 0 4-8 5-15 4Z" fill="#dc3545" />
       <defs>
         <linearGradient id="gShade" x1="0" x2="1">
           <stop offset="0" stopColor="#fff" stopOpacity=".18" />
@@ -168,9 +168,9 @@ export function HeroArt() {
         <Garland />
       </div>
       <Gifts />
-      <div className="gift-tag p1">Doprava zdarma</div>
+      <div className="gift-tag p1">Kofola Nulka zdarma</div>
       <div className="gift-tag p2 pink">Soutěž o poukaz 3 000 Kč</div>
-      <div className="gift-tag p3">Druhá figurka zdarma</div>
+      <div className="gift-tag p3">Až 10 % sleva</div>
     </div>
   );
 }

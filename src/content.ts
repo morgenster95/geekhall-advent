@@ -1,50 +1,74 @@
 import type { Door } from './types';
 
 /**
- * OBSAH KALENDÁŘE – všech 24 okének adventního kalendáře Geekhall 2026.
- * Texty, slevy a kódy jsou NÁVRH – ověřte je před spuštěním (u každé nabídky je poznámka `confirm`,
- * která se zobrazí jen v režimu CONTENT_MODE = 'draft'). Okénko se odemyká o půlnoci českého času (Europe/Prague).
+ * OBSAH KALENDÁŘE – všech 24 okének adventního kalendáře Geek Hall 2026.
+ * Slevové kódy odpovídají odměnám domluveným se zadavatelem (14 kódů, 3 soutěže, zbytek hry a tipy).
+ * Kódy je potřeba založit v e-shopu (viz README). U okének s poznámkou `confirm` zbývá ověřit podmínky;
+ * poznámka se zobrazí jen v režimu CONTENT_MODE = 'draft'. Okénko se odemyká o půlnoci českého času (Europe/Prague).
  *
  * Texty: prázdný řádek = nový odstavec, jinak řádky zůstávají pod sebou.
  */
 export const YEAR = 2026;
 
 export const BASE = import.meta.env.BASE_URL;
-export const SHOP = 'https://www.geekhall.cz/';
+export const SHOP = 'https://geekhall.cz/';
 const IMG = BASE + 'img/';
-void IMG;
 
-/** Provozovatel kalendáře a pořadatel soutěží – DOPLNIT před spuštěním (patička + pravidla soutěží) */
+/** Provozovatel kalendáře a pořadatel soutěží. Údaje převzaty z patičky geekhall.cz (© Svět karet s.r.o., IČO 11858770, prodejna v Hodoníně) – ověřit sídlo a doplnit DIČ. */
 export const OPERATOR = {
-  name: 'DOPLNIT provozovatele (obchodní firma)',
-  address: 'DOPLNIT sídlo',
-  ico: 'DOPLNIT',
+  name: 'Svět karet s.r.o.',
+  address: 'Dolní Valy 3940/2, 695 01 Hodonín',
+  ico: '11858770',
   dic: 'DOPLNIT',
-  email: 'DOPLNIT@geekhall.cz',
-  phone: '',
+  email: 'info@geekhall.cz',
+  phone: '+420 606 373 676',
 };
 export const RULES_URL = '?pravidla';
 export const PRIVACY_URL = SHOP + 'ochrana-osobnich-udaju/';
-export const CONTACT_URL = SHOP + 'kontakt/';
+export const CONTACT_URL = SHOP + 'kontakty/';
+
+/** Hlavní kategorie e-shopu (menu v hlavičce) */
+export const CATEGORIES = [
+  { label: 'Pokémoni', url: SHOP + 'kategorie/sberatelske-hry-2/pokemoni/' },
+  { label: 'Merch', url: SHOP + 'kategorie/merch/' },
+  { label: 'Deskové hry', url: SHOP + 'kategorie/deskove-hry/' },
+  { label: 'Sběratelské hry', url: SHOP + 'kategorie/sberatelske-hry-2/' },
+  { label: 'Doplňky a příslušenství', url: SHOP + 'kategorie/doplnky-a-prislusenstvi/' },
+  { label: 'Další', url: SHOP + 'kategorie/dalsi-produkty/' },
+  { label: 'Blog', url: SHOP + 'blog/' },
+];
+const CAT = {
+  figurky: SHOP + 'kategorie/merch/figurky-a-sosky/',
+  plysaci: SHOP + 'kategorie/merch/plysaci/',
+  deskovky: SHOP + 'kategorie/deskove-hry/',
+  barveni: SHOP + 'kategorie/dalsi-produkty/wargaming-a-barveni/',
+  sberatelske: SHOP + 'kategorie/sberatelske-hry-2/',
+  pokemon: SHOP + 'kategorie/sberatelske-hry-2/pokemoni/',
+  onepiece: SHOP + 'kategorie/sberatelske-hry-2/one-piece-karty/',
+  doplnky: SHOP + 'kategorie/doplnky-a-prislusenstvi/',
+  merch: SHOP + 'kategorie/merch/',
+};
 
 export const CONTEST_DAYS = [5, 13, 19];
 
-const shop = { url: SHOP, urlLabel: 'Do e-shopu Geekhall' };
-const HOW = 'Kód zadejte v košíku e-shopu Geekhall.';
-const CONF = 'Návrh nabídky – potvrdit podmínky, sortiment a platnost kódu v e-shopu.';
+const shop = { url: SHOP, urlLabel: 'Do e-shopu Geek Hall' };
+const HOW = 'Kód zadejte v košíku e-shopu Geek Hall.';
+const CAP = 'Platí pro objednávky do 10 000 Kč.';
+const CONF = 'Ověřit podmínky slevy a založit kód v e-shopu (viz README).';
+const CONF_MIN = 'Ověřit, zda se minimální hodnota nákupu počítá z celého košíku, nebo jen z produktů dané kategorie, a založit kód v e-shopu.';
 
 export const doors: Door[] = [
   {
-    day: 1, type: 'offer', title: 'Vítejte v adventu s Geekhallem',
+    day: 1, type: 'offer', title: 'Vítejte v adventu: Kofola Nulka na úvod',
     text: `Až do Štědrého dne na vás tady každý den čeká nové okénko. Slevy, hry, soutěže a tipy pro každého geeka.
 
-A hned na začátek máme dárek: doprava zdarma k jakékoli objednávce.
+A hned na začátek máme něco na zahřátí, vlastně na vychlazení: při nákupu nad 1 000 Kč dostanete plechovku Kofola Nulka zdarma.
 
 ${HOW} Platí do 31. 12.
 
 Všechno, co otevřete, najdete i později v sekci „Moje dárky“. Další okénko se odemyká vždy o půlnoci.`,
-    coupon: { code: 'GEEK-01', value: 'Doprava zdarma k jakékoli objednávce', valid: 'Platí do 31. 12.' },
-    confirm: CONF, ...shop,
+    coupon: { code: 'GEEK-NULKA', value: 'Plechovka Kofola Nulka zdarma k nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
+    confirm: 'Ověřit, že lze „dárek k objednávce“ v e-shopu nastavit kódem (jinak ručně při expedici), a že je Kofola Nulka skladem.', ...shop,
   },
   {
     day: 2, type: 'game', title: 'Poznáte pravého geeka? Čtyři otázky',
@@ -54,7 +78,7 @@ Kdo odpoví správně na všechny, čeká ho odměna.`,
     game: {
       kind: 'quiz',
       hideAnswers: true,
-      reward: 'Výborně, jste pravý geek! Do košíku zadejte kód GEEK-02 a máte slevu 5 % na celý nákup. Platí do 31. 12.',
+      reward: 'Výborně, jste pravý geek! Do košíku zadejte kód GEEK-D20 a při nákupu nad 2 000 Kč máte slevu 5 %. Platí pro objednávky do 10 000 Kč a do 31. 12.',
       fail: 'Tentokrát to nevyšlo. Zkuste to znovu.',
       questions: [
         { q: 'Jak se jmenuje pouštní planeta, na které vyrůstal Luke Skywalker?', options: ['Hoth', 'Tatooine', 'Endor', 'Naboo'], answer: 1 },
@@ -63,7 +87,7 @@ Kdo odpoví správně na všechny, čeká ho odměna.`,
         { q: 'Kolik Kamenů nekonečna je v komiksech a filmech Marvelu?', options: ['5', '6', '7', '9'], answer: 1 },
       ],
     },
-    confirm: 'Potvrdit slevu 5 % (kód GEEK-02) a že se zadá ručně v košíku.',
+    confirm: 'Založit kód GEEK-D20: 5 % při nákupu nad 2 000 Kč, do objednávky 10 000 Kč.',
   },
   {
     day: 3, type: 'tip', title: '4 tipy, jak pečovat o sběratelské figurky',
@@ -75,30 +99,30 @@ Kdo odpoví správně na všechny, čeká ho odměna.`,
       'Originální krabici nevyhazujte. Sběratelská hodnota je s ní výrazně vyšší.',
     ],
     more: 'Máte doma místo, kde by se hodila další? Zítra na vás čeká překvapení.',
-    ...shop,
+    url: CAT.figurky, urlLabel: 'Figurky a sošky',
   },
   {
-    day: 4, type: 'offer', title: '10 % na figurky a sběratelské předměty',
+    day: 4, type: 'offer', title: '5 % na figurky a sošky',
     text: `Včera jsme si ukázali, jak o figurky pečovat. Dnes si můžete přidat další.
 
-Sleva 10 % na figurky a sběratelské předměty. ${HOW}
+Při nákupu nad 1 000 Kč máte slevu 5 % na figurky a sošky. ${HOW}
 
-Nabídka platí jen 48 hodin, do soboty 5. 12. do půlnoci.`,
-    coupon: { code: 'GEEK-04', value: 'Sleva 10 % na figurky a sběratelské předměty', valid: 'Platí 48 hodin, do soboty 5. 12. do půlnoci' },
-    confirm: CONF, ...shop,
+Platí do 31. 12.`,
+    coupon: { code: 'GEEK-SOSKA', value: 'Sleva 5 % na figurky a sošky při nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.figurky, urlLabel: 'Figurky a sošky',
   },
   {
     day: 5, type: 'contest', title: 'Soutěž o herní set dle vašeho výběru',
     text: `Mikuláš letos nadělí geekovi radost.
 
-Soutěžíme o nákup v e-shopu Geekhall v hodnotě 3 000 Kč. Stačí vyplnit svůj e-mail a jste ve hře.
+Soutěžíme o nákup v e-shopu Geek Hall v hodnotě 3 000 Kč. Stačí vyplnit svůj e-mail a jste ve hře.
 
 Výherce vylosujeme na Štědrý den 24. 12. a ozveme se mu e-mailem.
 
 Držíme palce!`,
     contest: {
       kind: 'email',
-      prize: 'Dárkový poukaz do e-shopu Geekhall v hodnotě 3 000 Kč',
+      prize: 'Dárkový poukaz do e-shopu Geek Hall v hodnotě 3 000 Kč',
       rules: 'Zapojit se můžete do 23. 12. 2026 do 23:59. Výherce vylosujeme 24. 12. a pošleme mu e-mail.',
       until: '2026-12-23T23:59:59+01:00',
     },
@@ -124,70 +148,71 @@ Držíme palce!`,
     },
   },
   {
-    day: 7, type: 'offer', title: 'Hrnky a trička: sleva 15 %',
-    text: `Hrnek s hláškou a tričko s motivem oblíbené série patří mezi dárky, které se vždy trefí.
+    day: 7, type: 'offer', title: 'Star Wars: 10 % na produkty ze vzdálené galaxie',
+    text: `Ať je s vámi Síla, i když je v košíku pár věcí navíc.
 
-Sleva 15 % na hrnky a trička. ${HOW}
+Při nákupu nad 2 000 Kč máte slevu 10 % na produkty Star Wars. ${HOW}
 
-Platí do 31. 12.`,
-    coupon: { code: 'GEEK-07', value: 'Sleva 15 % na hrnky a trička', valid: 'Platí do 31. 12.' },
-    confirm: CONF, ...shop,
+${CAP} Platí do 31. 12.`,
+    image: { src: IMG + 'obiwan.png', alt: 'Figurka Obi-Wan Kenobi z Hvězdných válek' },
+    coupon: { code: 'GEEK-SILA', value: 'Sleva 10 % na produkty Star Wars při nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.sberatelske + 'star-wars-unlimited/', urlLabel: 'Star Wars: Unlimited',
   },
   {
-    day: 8, type: 'tip', title: 'Dárek pro hráče, sběratele i deskovkáře',
+    day: 8, type: 'tip', title: 'Dárek pro sběratele, hráče i deskovkáře',
     text: 'Vybrat dárek pro geeka není jednoduché. Proto jsme vybrali za vás.',
     links: [
-      { label: 'Pro hráče: herní doplňky', url: SHOP, note: 'Podložky, ovladače, sluchátka a vše, co se hodí k hraní.' },
-      { label: 'Pro sběratele: figurky a sběratelské předměty', url: SHOP, note: 'Kousky z oblíbených filmů, seriálů, her a komiksů.' },
-      { label: 'Pro deskovkáře: hry a doplňky', url: SHOP, note: 'Společenské hry, kostky a karty pro dlouhé zimní večery.' },
+      { label: 'Pro sběratele: karetní hry', url: CAT.sberatelske, note: 'Pokémon, One Piece, Lorcana, Magic, Riftbound i Star Wars: Unlimited.' },
+      { label: 'Pro deskovkáře: deskové hry', url: CAT.deskovky, note: 'Strategické, rodinné, párty i kooperativní hry pro dlouhé zimní večery.' },
+      { label: 'Pro fanoušky: merch a figurky', url: CAT.merch, note: 'Figurky, plyšáci, oblečení a geek domácnost z oblíbených světů.' },
+      { label: 'Pro hráče: doplňky a příslušenství', url: CAT.doplnky, note: 'Obaly, alba, toploadery, kostky a herní podložky.' },
     ],
     more: 'Nevíte si rady? Napište nám a poradíme.',
-    confirm: 'Doplnit přímé odkazy na kategorie v e-shopu.',
   },
   {
-    day: 9, type: 'offer', title: 'Deskovky a puzzle: sleva 12 %',
-    text: `Vánoční svátky patří rodině a společné hře. Dnes jsou deskovky a puzzle levnější.
+    day: 9, type: 'offer', title: 'Deskové hry: 5 % na dlouhé zimní večery',
+    text: `Vánoční svátky patří rodině a společné hře. Dnes jsou deskovky levnější.
 
-Sleva 12 % na deskové hry a puzzle. ${HOW}
+Při nákupu nad 1 000 Kč máte slevu 5 % na deskové hry. ${HOW}
 
 Platí do 31. 12.`,
-    coupon: { code: 'GEEK-09', value: 'Sleva 12 % na deskové hry a puzzle', valid: 'Platí do 31. 12.' },
-    confirm: CONF, ...shop,
+    image: { src: IMG + 'strategicke.jpg', alt: 'Strategické deskové hry' },
+    coupon: { code: 'GEEK-KOSTKA', value: 'Sleva 5 % na deskové hry při nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.deskovky, urlLabel: 'Deskové hry',
   },
   {
     day: 10, type: 'tip', title: 'Dárek pro geeka: 5 věcí, než ho zabalíte',
     text: 'Dárek, který se trefí do vkusu, vyžaduje trochu přípravy. Zkontrolujte tyto věci ještě před zabalením:',
     list: [
       'Zjistěte, co už má. Duplicitní figurka nebo hra jsou nejčastější chyba.',
-      'Sedí platforma? Hra pro PlayStation nepoběží na Switchi.',
-      'Vyberte správnou edici. Standardní, sběratelská, rozšíření.',
-      'Přibalte baterie nebo nabíječku. Ať se dá hrát hned.',
-      'Přidejte dárkovou poukázku. Jako pojistku pro velikost nebo jiný vkus.',
+      'Správný set nebo edice. Karetní hry mají desítky edic, ověřte, kterou sbírá.',
+      'Jazyk a pravidla. U deskovek a karet ověřte, zda je hra česky nebo anglicky.',
+      'Nezapomeňte na příslušenství. Obaly, album nebo toploader chrání sbírku od prvního dne.',
+      'Zvažte velikost a stav krabice. U sběratelských kousků záleží na neporušeném obalu.',
     ],
-    more: 'Nevíte? Pomůže vám naše poradna: napište nám, jaký geek to je.',
+    more: 'Nevíte? Napište nám, jaký geek to je, a poradíme.',
     ...shop,
   },
   {
-    day: 11, type: 'offer', title: 'Dva za cenu jednoho: druhá figurka zdarma',
-    text: `Jednu pro sebe a druhou jako dárek.
+    day: 11, type: 'offer', title: 'Barvení a modelařství: 10 % na štětce a barvy',
+    text: `Ať figurky na stole vypadají jako z turnaje. Dnes jsou barvy, štětce a modelářské potřeby levnější.
 
-Při koupi dvou vybraných figurek je ta levnější zdarma. ${HOW}
+Při nákupu nad 1 000 Kč máte slevu 10 % na barvení a modelařství. ${HOW}
 
 Platí do 31. 12.`,
-    coupon: { code: 'GEEK-11', value: 'Druhá (levnější) vybraná figurka zdarma', valid: 'Platí do 31. 12.' },
-    confirm: 'Upřesnit, které figurky se akce týká, a jak ji nastavit v košíku (slevový kód vs. akce).', ...shop,
+    coupon: { code: 'GEEK-STETEC', value: 'Sleva 10 % na barvení a modelařství při nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.barveni, urlLabel: 'Wargaming a barvení',
   },
   {
-    day: 12, type: 'tip', title: 'Jak zabalit křehký dárek, aby přežil cestu',
-    text: `Figurka nebo sběratelský kousek si zaslouží opatrné zacházení. Pár zásad pro balení a předání:`,
-    list: [
-      'Chraňte rohy a výstupky. Hadříkem nebo bublinkovou fólií.',
-      'Nechte originální krabici. Dodatečně ji zabalte do kartonu.',
-      'Označte „křehké“. Ať ví i ten, kdo balíček nese.',
-      'Při převzetí zkontrolujte obal. Poškozený balík reklamujte hned.',
-    ],
-    more: 'Nechcete balit sami? V e-shopu u objednávky vyberte dárkové balení, pokud je u produktu dostupné.',
-    ...shop,
+    day: 12, type: 'offer', title: 'Plyšáci: 10 % na mazlíky pod stromeček',
+    text: `Plyšák se hodí pod stromeček každému, malému i velkému. Pokémoni, oblíbení hrdinové i klasika.
+
+Při nákupu plyšáků máte slevu 10 %, bez minimální hodnoty nákupu. ${HOW}
+
+Platí do 31. 12.`,
+    image: { src: IMG + 'plysak.jpg', alt: 'Plyšák Teddiursa z kolekce Pokémon Squishmallows' },
+    coupon: { code: 'GEEK-PLYSAK', value: 'Sleva 10 % na plyšáky', valid: 'Platí do 31. 12.' },
+    confirm: CONF, url: CAT.plysaci, urlLabel: 'Plyšáci',
   },
   {
     day: 13, type: 'contest', title: 'Kolik balíčků jsme letos odeslali?',
@@ -198,25 +223,26 @@ Zkuste odhadnout, kolik balíčků jsme v roce 2026 odeslali. Kdo se trefí nejb
 Zadejte svůj tip a e-mail. Tipy můžete posílat do pátku 18. 12. Výherce vyhlásíme v pondělí 21. 12. a ozveme se mu e-mailem.`,
     contest: {
       kind: 'number', placeholder: 'Váš tip (celé číslo)',
-      prize: 'Dárkový poukaz do e-shopu Geekhall v hodnotě 1 000 Kč',
+      prize: 'Dárkový poukaz do e-shopu Geek Hall v hodnotě 1 000 Kč',
       rules: 'Tipy můžete posílat do 18. 12. 2026 do 23:59. Vyhrává nejbližší tip, při shodě ten dříve odeslaný. Výherce vyhlásíme 21. 12.',
       until: '2026-12-18T23:59:59+01:00',
     },
     confirm: 'Doplnit skutečný počet odeslaných balíků za rok 2026 (pro vyhodnocení) a cenu 1 000 Kč.',
   },
   {
-    day: 14, type: 'offer', title: 'Gaming doplňky: sleva 10 %',
-    text: `Dobrý hráč potřebuje dobré vybavení.
+    day: 14, type: 'offer', title: 'Warhammer: 10 % ve jménu Císaře',
+    text: `Za Císaře! Nebo za Sigmara, jak je libo. Armáda se sama nepostaví.
 
-Sleva 10 % na herní doplňky. ${HOW}
+Při nákupu nad 3 000 Kč máte slevu 10 % na produkty Warhammer (40k a Age of Sigmar). ${HOW}
 
-Platí do 31. 12.`,
-    coupon: { code: 'GEEK-14', value: 'Sleva 10 % na herní doplňky', valid: 'Platí do 31. 12.' },
-    confirm: CONF, ...shop,
+${CAP} Platí do 31. 12.`,
+    image: { src: IMG + 'warhammer.png', alt: 'Logo Warhammer' },
+    coupon: { code: 'GEEK-WAAAGH', value: 'Sleva 10 % na Warhammer (40k, Age of Sigmar) při nákupu nad 3 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.barveni, urlLabel: 'Wargaming a barvení',
   },
   {
     day: 15, type: 'tip', title: 'Jak vyfotit sbírku mobilem jako profík',
-    text: 'Figurky, LEGO nebo herní kout si zaslouží pořádnou fotku. Pár jednoduchých triků:',
+    text: 'Figurky, karty nebo herní kout si zaslouží pořádnou fotku. Pár jednoduchých triků:',
     list: [
       'Otřete čočku. Fotoaparát v kapse sbírá otisky víc, než si myslíte.',
       'Světlo z boku. Okno nebo lampa vedle sbírky dá fotce hloubku.',
@@ -244,35 +270,37 @@ Platí do 31. 12.`,
     },
   },
   {
-    day: 17, type: 'offer', title: 'Tajný kód jen pro vás',
-    text: `Dnešní okénko je tajné.
+    day: 17, type: 'offer', title: 'Harry Potter: 10 % z Příčné ulice',
+    text: `Sova s dopisem dorazila. Bradavice posílají pozvánku na nákup.
 
-Zadejte tento tajný kód v košíku a dostanete malý dárek k objednávce.
+Při nákupu nad 2 000 Kč máte slevu 10 % na produkty Harry Potter. ${HOW}
 
-Platí do 24. 12.`,
-    coupon: { code: 'GEEK-17', value: 'Malý dárek k objednávce', valid: 'Platí do 24. 12.' },
-    confirm: 'Určit, co je „malý dárek“ a jak se přidá k objednávce (ručně / automaticky).', ...shop,
+${CAP} Platí do 31. 12.`,
+    image: { src: IMG + 'potter.jpeg', alt: 'Sada oblečení Harry Potter, kolej Zmijozel' },
+    coupon: { code: 'GEEK-BRADAVICE', value: 'Sleva 10 % na produkty Harry Potter při nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.merch, urlLabel: 'Merch',
   },
   {
-    day: 18, type: 'offer', title: 'Doprava zdarma bez minima',
-    text: `Dnes nemusíte nic počítat. Jakkoli malá objednávka, doprava vás nestojí nic.
+    day: 18, type: 'offer', title: 'Pokémon TCG: 5 % na chytání karet',
+    text: `Pikachu hlásí: ve vánočním nákupu to chce pár boosterů navíc.
 
-${HOW}
+Při nákupu nad 4 000 Kč máte slevu 5 % na produkty Pokémon TCG. ${HOW}
 
-Platí do 31. 12.`,
-    coupon: { code: 'GEEK-18', value: 'Doprava zdarma bez minimální hodnoty objednávky', valid: 'Platí do 31. 12.' },
-    confirm: CONF, ...shop,
+${CAP} Platí do 31. 12.`,
+    image: { src: IMG + 'pikachu.png', alt: 'Pikachu' },
+    coupon: { code: 'GEEK-POKEBALL', value: 'Sleva 5 % na Pokémon TCG při nákupu nad 4 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.pokemon, urlLabel: 'Pokémoni',
   },
   {
     day: 19, type: 'contest', title: 'Soutěž o nejlepší geek koutek',
     text: `Police plná figurek, herní setup, nebo celá vitrína? Ukažte nám, kde bydlí váš nejoblíbenější kousek.
 
-Vyfoťte svůj geek koutek a pošlete nám ho. Majitel toho nejzajímavějšího vyhraje nákup v e-shopu Geekhall v hodnotě 2 000 Kč.
+Vyfoťte svůj geek koutek a pošlete nám ho. Majitel toho nejzajímavějšího vyhraje nákup v e-shopu Geek Hall v hodnotě 2 000 Kč.
 
 Fotky můžete posílat do úterý 22. 12., výherce vyhlásíme ve středu 23. 12.`,
     contest: {
       kind: 'photo',
-      prize: 'Dárkový poukaz do e-shopu Geekhall v hodnotě 2 000 Kč',
+      prize: 'Dárkový poukaz do e-shopu Geek Hall v hodnotě 2 000 Kč',
       rules: 'Fotky můžete posílat do 22. 12. 2026 do 23:59. Fotka musí být vlastní a neupravená. Výherce vyhlásíme 23. 12.',
       until: '2026-12-22T23:59:59+01:00',
     },
@@ -280,70 +308,67 @@ Fotky můžete posílat do úterý 22. 12., výherce vyhlásíme ve středu 23. 
   },
   {
     day: 20, type: 'game', title: 'Jaký jste typ geeka?',
-    text: 'Někdo hraje, jiný sbírá, další balí karty do obalů. Čtyři otázky a víme, jaký typ jste vy.',
+    text: 'Někdo sbírá karty, jiný skládá armádu a další hraje u stolu s přáteli. Čtyři otázky a víme, jaký typ jste vy.',
     game: {
       kind: 'persona',
-      // body: Hráč 1A 2A 3A 4A · Sběratel 1B 2B 3B 4B · Deskovkář 1C 2C 3C 4C
+      // body: Sběratel 1A 2A 3A 4A · Hráč 1B 2B 3B 4B · Deskovkář 1C 2C 3C 4C
       // (při shodě vyhrává typ, který je v results dřív)
       questions: [
-        { q: 'Jak nejraději trávíte volný večer?', options: [{ t: 'U konzole nebo PC', r: 'gamer' }, { t: 'Přerovnáváním sbírky', r: 'collector' }, { t: 'U stolu s kamarády a hrou', r: 'tabletop' }] },
-        { q: 'Co by vás potěšilo pod stromečkem?', options: [{ t: 'Nová sluchátka nebo ovladač', r: 'gamer' }, { t: 'Limitovaná figurka', r: 'collector' }, { t: 'Nová deskovka', r: 'tabletop' }] },
-        { q: 'Kolik máte doma věcí z oblíbené série?', options: [{ t: 'Pár, hlavně hry', r: 'gamer' }, { t: 'Celou vitrínu', r: 'collector' }, { t: 'Spíš krabice her než věcí', r: 'tabletop' }] },
-        { q: 'Na co se na Vánoce těšíte nejvíc?', options: [{ t: 'Na volno a nové hry', r: 'gamer' }, { t: 'Až doma všechno vystavím', r: 'collector' }, { t: 'Na hru s celou rodinou', r: 'tabletop' }] },
+        { q: 'Jak nejraději trávíte volný večer?', options: [{ t: 'Přerovnáváním sbírky karet a figurek', r: 'collector' }, { t: 'Malováním figurek nebo skládáním modelu', r: 'gamer' }, { t: 'U stolu s kamarády a hrou', r: 'tabletop' }] },
+        { q: 'Co by vás potěšilo pod stromečkem?', options: [{ t: 'Booster box nebo limitovaná figurka', r: 'collector' }, { t: 'Nová armáda nebo sada barev', r: 'gamer' }, { t: 'Nová deskovka', r: 'tabletop' }] },
+        { q: 'Kolik máte doma věcí z oblíbené série?', options: [{ t: 'Celou vitrínu', r: 'collector' }, { t: 'Pár kousků, ale poctivě pomalovaných', r: 'gamer' }, { t: 'Spíš krabice her než věcí', r: 'tabletop' }] },
+        { q: 'Na co se na Vánoce těšíte nejvíc?', options: [{ t: 'Až doma všechno vystavím', r: 'collector' }, { t: 'Na volno a velkou bitvu', r: 'gamer' }, { t: 'Na hru s celou rodinou', r: 'tabletop' }] },
       ],
       results: {
-        gamer: { title: 'Hráč', text: 'Vaším domovem je obrazovka. Doporučujeme herní doplňky.', links: [{ label: 'E-shop Geekhall', url: SHOP }] },
-        collector: { title: 'Sběratel', text: 'Každý kousek má své místo. Doporučujeme figurky a sběratelské předměty.', links: [{ label: 'E-shop Geekhall', url: SHOP }] },
-        tabletop: { title: 'Deskovkář', text: 'Nejlepší hra je ta, u které se sejde parta. Doporučujeme deskovky a puzzle.', links: [{ label: 'E-shop Geekhall', url: SHOP }] },
+        collector: { title: 'Sběratel', text: 'Každý kousek má své místo. Doporučujeme karetní hry, figurky a sběratelské předměty.', links: [{ label: 'Sběratelské hry', url: CAT.sberatelske }, { label: 'Figurky a sošky', url: CAT.figurky }] },
+        gamer: { title: 'Hráč a modelář', text: 'Vaším domovem je bojiště na stole. Doporučujeme Warhammer, barvy a herní příslušenství.', links: [{ label: 'Wargaming a barvení', url: CAT.barveni }, { label: 'Doplňky a příslušenství', url: CAT.doplnky }] },
+        tabletop: { title: 'Deskovkář', text: 'Nejlepší hra je ta, u které se sejde parta. Doporučujeme deskovky pro každou příležitost.', links: [{ label: 'Deskové hry', url: CAT.deskovky }] },
       },
     },
-    confirm: 'Doplnit přímé odkazy na kategorie v e-shopu.',
   },
   {
-    day: 21, type: 'offer', title: 'Balíček „Pro každého geeka“',
-    text: `Hrnek, tričko a malá figurka. Dárek, který rozzáří každého geeka.
+    day: 21, type: 'offer', title: 'One Piece TCG: 5 % na hledání pokladu',
+    text: `Poklad Gold Rogera čeká a nová karta do balíčku taky.
 
-Při nákupu tří různých produktů z kategorií hrnky, trička a figurky získáte slevu 15 % na celý nákup. ${HOW}
+Při nákupu nad 4 000 Kč máte slevu 5 % na produkty One Piece TCG. ${HOW}
 
-Platí do 31. 12.`,
-    coupon: { code: 'GEEK-21', value: 'Sleva 15 % při nákupu hrnku, trička a figurky', valid: 'Platí do 31. 12.' },
-    confirm: 'Potvrdit podmínky balíčku (minimální obsah košíku).', ...shop,
+${CAP} Platí do 31. 12.`,
+    coupon: { code: 'GEEK-POKLAD', value: 'Sleva 5 % na One Piece TCG při nákupu nad 4 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    confirm: CONF_MIN, url: CAT.onepiece, urlLabel: 'One Piece TCG',
   },
   {
-    day: 22, type: 'tip', title: 'Stihnete dárky před Vánoci?',
-    text: `Nezoufejte. Pár zásad, jak zajistit, aby dárek dorazil včas:
+    day: 22, type: 'offer', title: 'StarCraft: 10 % a zerg rush do košíku',
+    text: `Zerglingové jsou na cestě. Základnu už nepostavíte, ale s dnešní slevou si můžete postavit sbírku.
 
-Objednávejte co nejdřív. Termíny pro doručení před Vánoci najdete v e-shopu v sekci doprava a platba.
+Při nákupu nad 2 000 Kč máte slevu 10 % na produkty StarCraft. ${HOW}
 
-Zvolte rychlý způsob dopravy. Výdejní místo je často rychlejší než doručení domů.
-
-Kdyby se nestihlo, pošlete dárkový poukaz. Přijde e-mailem hned.`,
-    more: 'Poslední termíny a otevírací dobu o svátcích zjistíte na webu Geekhall.',
-    url: CONTACT_URL, urlLabel: 'Kontakt a doprava',
-    confirm: 'Doplnit konkrétní poslední termíny objednávek a svátečního provozu.',
+${CAP} Platí do 31. 12.`,
+    coupon: { code: 'GEEK-ZERG', value: 'Sleva 10 % na produkty StarCraft při nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    confirm: CONF_MIN, ...shop,
   },
   {
-    day: 23, type: 'offer', title: 'Last minute: dárkový poukaz s bonusem',
-    text: `Neurčili jste, co koupit? Dárkový poukaz přijde e-mailem hned a vyřeší všechno.
+    day: 23, type: 'offer', title: 'Vánoční loot: 5 % na celý nákup',
+    text: `Předvánoční loot je tady. Dnes si můžete přihodit cokoli, sleva se počítá z celého nákupu.
 
-Při koupi dárkového poukazu dostanete bonus 10 %. ${HOW}
+Při nákupu nad 2 000 Kč máte slevu 5 %. ${HOW}
 
-Platí do 24. 12.`,
-    coupon: { code: 'GEEK-23', value: 'Bonus 10 % při koupi dárkového poukazu', valid: 'Platí do 24. 12.' },
-    confirm: 'Ověřit, že e-shop dárkové poukazy prodává a jak bonus 10 % nastavit (může být jen slevový kód).', ...shop,
+${CAP} Platí do 24. 12.`,
+    image: { src: IMG + 'kostky.jpeg', alt: 'Solnička a pepřenka ve tvaru kostek z Dungeons & Dragons' },
+    coupon: { code: 'GEEK-LOOT', value: 'Sleva 5 % na celý nákup nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 24. 12.' },
+    confirm: CONF, ...shop,
   },
   {
-    day: 24, type: 'finale', title: 'Krásné Vánoce od Geekhallu',
+    day: 24, type: 'finale', title: 'Krásné Vánoce od Geek Hallu',
     text: `Děkujeme, že jste s námi otevírali adventní okénka.
 
-Dnes losujeme výherce hlavní ceny, poukazu do e-shopu Geekhall. Výherci pošleme e-mail ještě dnes.
+Dnes losujeme výherce hlavní ceny, poukazu do e-shopu Geek Hall. Výherci pošleme e-mail ještě dnes.
 
-A protože k Vánocům patří dárky pro všechny, máme jeden i pro vás: sleva 10 % na první nákup v novém roce. Stačí zadat kód do 31. 1. 2027.`,
-    coupon: { code: 'GEEK-24', value: 'Sleva 10 % na nákup v lednu', valid: 'Platí do 31. 1. 2027' },
+A protože k Vánocům patří dárky pro všechny, máme jeden i pro vás: legendární drop na závěr. Při nákupu nad 5 000 Kč máte slevu 10 % na celý nákup. Platí pro objednávky do 10 000 Kč, kód zadejte do 31. 1. 2027.`,
+    coupon: { code: 'GEEK-LEGENDA', value: 'Sleva 10 % na celý nákup nad 5 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 1. 2027' },
     more: `Krásné Vánoce a ať se vám pod stromečkem sejde všechno, co si přejete.
 
-Váš Geekhall`,
-    confirm: CONF, ...shop,
+Váš Geek Hall`,
+    confirm: 'Potvrdit platnost kódu (do 31. 1. 2027?) a založit kód v e-shopu.', ...shop,
   },
 ];
 
