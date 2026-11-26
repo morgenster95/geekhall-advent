@@ -14,18 +14,17 @@ Rozdíl: e-shop místo poboček – odměny jsou **slevové kódy `GEEK-…` do 
 - [ ] Soutěž 13: doplnit skutečný počet odeslaných balíků za rok 2026. Ceny soutěží (3 000 / 1 000 / 2 000 Kč) potvrdit i v `src/components/Rules.tsx`.
 - [x] Odkazy na kategorie, kontakt a ochranu údajů odpovídají skutečným adresám geekhall.cz (stav z 26. 11. 2026).
 - [ ] Kódy z tabulky níže (a `docs/slevove-kody.csv`) založit v e-shopu jako slevové kupóny.
-- [x] Logo (`public/img/logo-white.png`, `logo-black.svg`), barvy a písmo převzaté z geekhall.cz. Ověřit s majitelem značky, že lze obrázky z e-shopu v kalendáři použít.
+- [x] Logo (`public/img/logo-white.png`, `logo-black.svg`), barvy a písmo převzaté z geekhall.cz.
 - [ ] Správce: Google e-mail v `ADMIN_EMAILS` (`src/config.ts`) **i** v `isAdmin()` ve `firestore.rules`.
 - [ ] `DEMO_MODE = false` (výchozí), `PREVIEW_KEY` (`?nahled=geekadvent` odemkne všechna okénka).
 
-## Slevové kódy (14)
+## Slevové kódy (13)
 
-Podmínky vycházejí z domluvených odměn. Sleva „do hodnoty objednávky“ znamená, že kód platí jen pro objednávky v uvedeném rozmezí.
-Stejné údaje jsou v `docs/slevove-kody.csv` (středník, UTF-8) pro import nebo ruční založení v e-shopu.
+Podmínky vycházejí z domluvených odměn. U kódů s kategorií se **minimální nákup počítá jen z produktů dané kategorie a sleva platí jen na ně**; u kódů „celý nákup“ (`GEEK-D20`, `GEEK-LOOT`, `GEEK-LEGENDA`) z celého košíku. „Max. objednávka“ znamená, že kód platí jen pro objednávky do uvedené hodnoty. Okénko 1 je uvítací bez kódu (doprava zdarma nad 3 000 Kč je podmínka e-shopu).
+Kofola Nulka z nabídky vypadla. Stejné údaje jsou v `docs/slevove-kody.csv` (středník, UTF-8) pro import nebo ruční založení v e-shopu.
 
 | Okénko | Kód | Odměna | Platí na | Minimální nákup | Max. objednávka | Platnost |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1. 12. | `GEEK-NULKA` | Dárek: plechovka Kofola Nulka zdarma | celý nákup | od 1 000 Kč | – | 31. 12. 2026 |
 | 2. 12. | `GEEK-D20` | Sleva 5 % | celý nákup | od 2 000 Kč | do 10 000 Kč | 31. 12. 2026 |
 | 4. 12. | `GEEK-SOSKA` | Sleva 5 % | figurky a sošky | od 1 000 Kč | – | 31. 12. 2026 |
 | 7. 12. | `GEEK-SILA` | Sleva 10 % | produkty Star Wars | od 2 000 Kč | do 10 000 Kč | 31. 12. 2026 |
@@ -40,7 +39,6 @@ Stejné údaje jsou v `docs/slevove-kody.csv` (středník, UTF-8) pro import neb
 | 23. 12. | `GEEK-LOOT` | Sleva 5 % | celý nákup | od 2 000 Kč | do 10 000 Kč | 24. 12. 2026 |
 | 24. 12. | `GEEK-LEGENDA` | Sleva 10 % | celý nákup | od 5 000 Kč | do 10 000 Kč | 31. 1. 2027 |
 
-K ověření: zda se minimální nákup počítá z celého košíku, nebo jen z produktů dané kategorie (u textů je uvedeno „při nákupu nad X Kč“), a jak e-shop řeší dárek k objednávce (Kofola Nulka).
 Zadání obsahovalo dvakrát stejnou slevu 5 % při nákupu nad 2 000 Kč do 10 000 Kč, proto jsou kódy dva: `GEEK-D20` (odměna za kvíz v okénku 2) a `GEEK-LOOT` (okénko 23).
 
 ## Firebase (jednorázově, cca 15 min)

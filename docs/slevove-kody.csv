@@ -1,4 +1,4 @@
-﻿Okénko (prosinec);Kód;Typ slevy;Platí na;Minimální nákup (Kč);Maximální hodnota objednávky (Kč);Platnost do;Jednorázový kód
+﻿Okénko (prosinec);Kód;Typ slevy;Platí na (min. se počítá jen z těchto produktů);Minimální nákup (Kč);Maximální hodnota objednávky (Kč);Platnost do;Jednorázový kód
 1;GEEK-NULKA;Dárek: plechovka Kofola Nulka zdarma;celý nákup;1000;;31. 12. 2026;ne
 2;GEEK-D20;Sleva 5 %;celý nákup;2000;10000;31. 12. 2026;ne
 4;GEEK-SOSKA;Sleva 5 %;figurky a sošky;1000;;31. 12. 2026;ne
@@ -13,3 +13,4 @@
 22;GEEK-ZERG;Sleva 10 %;produkty StarCraft;2000;10000;31. 12. 2026;ne
 23;GEEK-LOOT;Sleva 5 %;celý nákup;2000;10000;24. 12. 2026;ne
 24;GEEK-LEGENDA;Sleva 10 %;celý nákup;5000;10000;31. 1. 2027;ne
+

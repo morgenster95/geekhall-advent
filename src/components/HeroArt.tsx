@@ -168,7 +168,7 @@ export function HeroArt() {
         <Garland />
       </div>
       <Gifts />
-      <div className="gift-tag p1">Kofola Nulka zdarma</div>
+      <div className="gift-tag p1">Doprava zdarma nad 3 000 Kč</div>
       <div className="gift-tag p2 pink">Soutěž o poukaz 3 000 Kč</div>
       <div className="gift-tag p3">Až 10 % sleva</div>
     </div>

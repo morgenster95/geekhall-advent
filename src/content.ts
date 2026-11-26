@@ -2,7 +2,7 @@ import type { Door } from './types';
 
 /**
  * OBSAH KALENDÁŘE – všech 24 okének adventního kalendáře Geek Hall 2026.
- * Slevové kódy odpovídají odměnám domluveným se zadavatelem (14 kódů, 3 soutěže, zbytek hry a tipy).
+ * Slevové kódy odpovídají odměnám domluveným se zadavatelem (13 kódů, 3 soutěže, zbytek hry a tipy).
  * Kódy je potřeba založit v e-shopu (viz README). U okének s poznámkou `confirm` zbývá ověřit podmínky;
  * poznámka se zobrazí jen v režimu CONTENT_MODE = 'draft'. Okénko se odemyká o půlnoci českého času (Europe/Prague).
  *
@@ -54,21 +54,22 @@ export const CONTEST_DAYS = [5, 13, 19];
 const shop = { url: SHOP, urlLabel: 'Do e-shopu Geek Hall' };
 const HOW = 'Kód zadejte v košíku e-shopu Geek Hall.';
 const CAP = 'Platí pro objednávky do 10 000 Kč.';
+const CATNOTE = 'Hodnota nákupu se počítá jen z produktů této kategorie a sleva platí jen na ně.';
 const CONF = 'Ověřit podmínky slevy a založit kód v e-shopu (viz README).';
-const CONF_MIN = 'Ověřit, zda se minimální hodnota nákupu počítá z celého košíku, nebo jen z produktů dané kategorie, a založit kód v e-shopu.';
+const CONF_MIN = 'Založit kód v e-shopu: sleva jen na produkty dané kategorie, minimum se počítá jen z nich (viz README).';
 
 export const doors: Door[] = [
   {
-    day: 1, type: 'offer', title: 'Vítejte v adventu: Kofola Nulka na úvod',
+    day: 1, type: 'tip', title: 'Vítejte v adventu s Geek Hallem',
     text: `Až do Štědrého dne na vás tady každý den čeká nové okénko. Slevy, hry, soutěže a tipy pro každého geeka.
 
-A hned na začátek máme něco na zahřátí, vlastně na vychlazení: při nákupu nad 1 000 Kč dostanete plechovku Kofola Nulka zdarma.
+Slevové kódy uplatníte v košíku e-shopu Geek Hall. U většiny z nich platí sleva jen na produkty z konkrétní kategorie, třeba na Warhammer, Pokémon nebo deskovky, a minimální hodnota nákupu se počítá jen z nich. Podmínky najdete vždy u kódu.
 
-${HOW} Platí do 31. 12.
+Dobrá zpráva na začátek: doprava je u nás zdarma při nákupu nad 3 000 Kč.
 
 Všechno, co otevřete, najdete i později v sekci „Moje dárky“. Další okénko se odemyká vždy o půlnoci.`,
-    coupon: { code: 'GEEK-NULKA', value: 'Plechovka Kofola Nulka zdarma k nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
-    confirm: 'Ověřit, že lze „dárek k objednávce“ v e-shopu nastavit kódem (jinak ručně při expedici), a že je Kofola Nulka skladem.', ...shop,
+    more: 'První slevu najdete hned zítra. Stačí odpovědět na čtyři otázky.',
+    ...shop,
   },
   {
     day: 2, type: 'game', title: 'Poznáte pravého geeka? Čtyři otázky',
@@ -105,10 +106,10 @@ Kdo odpoví správně na všechny, čeká ho odměna.`,
     day: 4, type: 'offer', title: '5 % na figurky a sošky',
     text: `Včera jsme si ukázali, jak o figurky pečovat. Dnes si můžete přidat další.
 
-Při nákupu nad 1 000 Kč máte slevu 5 % na figurky a sošky. ${HOW}
+Pokud nakoupíte figurky a sošky za více než 1 000 Kč, máte na ně slevu 5 %. ${CATNOTE} ${HOW}
 
 Platí do 31. 12.`,
-    coupon: { code: 'GEEK-SOSKA', value: 'Sleva 5 % na figurky a sošky při nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
+    coupon: { code: 'GEEK-SOSKA', value: 'Sleva 5 % na figurky a sošky při jejich nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.figurky, urlLabel: 'Figurky a sošky',
   },
   {
@@ -151,11 +152,11 @@ Držíme palce!`,
     day: 7, type: 'offer', title: 'Star Wars: 10 % na produkty ze vzdálené galaxie',
     text: `Ať je s vámi Síla, i když je v košíku pár věcí navíc.
 
-Při nákupu nad 2 000 Kč máte slevu 10 % na produkty Star Wars. ${HOW}
+Pokud nakoupíte produkty Star Wars za více než 2 000 Kč, máte na ně slevu 10 %. ${CATNOTE} ${HOW}
 
 ${CAP} Platí do 31. 12.`,
     image: { src: IMG + 'obiwan.png', alt: 'Figurka Obi-Wan Kenobi z Hvězdných válek' },
-    coupon: { code: 'GEEK-SILA', value: 'Sleva 10 % na produkty Star Wars při nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    coupon: { code: 'GEEK-SILA', value: 'Sleva 10 % na produkty Star Wars při jejich nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.sberatelske + 'star-wars-unlimited/', urlLabel: 'Star Wars: Unlimited',
   },
   {
@@ -173,11 +174,11 @@ ${CAP} Platí do 31. 12.`,
     day: 9, type: 'offer', title: 'Deskové hry: 5 % na dlouhé zimní večery',
     text: `Vánoční svátky patří rodině a společné hře. Dnes jsou deskovky levnější.
 
-Při nákupu nad 1 000 Kč máte slevu 5 % na deskové hry. ${HOW}
+Pokud nakoupíte deskové hry za více než 1 000 Kč, máte na ně slevu 5 %. ${CATNOTE} ${HOW}
 
 Platí do 31. 12.`,
     image: { src: IMG + 'strategicke.jpg', alt: 'Strategické deskové hry' },
-    coupon: { code: 'GEEK-KOSTKA', value: 'Sleva 5 % na deskové hry při nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
+    coupon: { code: 'GEEK-KOSTKA', value: 'Sleva 5 % na deskové hry při jejich nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.deskovky, urlLabel: 'Deskové hry',
   },
   {
@@ -197,10 +198,10 @@ Platí do 31. 12.`,
     day: 11, type: 'offer', title: 'Barvení a modelařství: 10 % na štětce a barvy',
     text: `Ať figurky na stole vypadají jako z turnaje. Dnes jsou barvy, štětce a modelářské potřeby levnější.
 
-Při nákupu nad 1 000 Kč máte slevu 10 % na barvení a modelařství. ${HOW}
+Pokud nakoupíte barvy a modelářské potřeby za více než 1 000 Kč, máte na ně slevu 10 %. ${CATNOTE} ${HOW}
 
 Platí do 31. 12.`,
-    coupon: { code: 'GEEK-STETEC', value: 'Sleva 10 % na barvení a modelařství při nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
+    coupon: { code: 'GEEK-STETEC', value: 'Sleva 10 % na barvení a modelařství při jejich nákupu nad 1 000 Kč', valid: 'Platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.barveni, urlLabel: 'Wargaming a barvení',
   },
   {
@@ -233,11 +234,11 @@ Zadejte svůj tip a e-mail. Tipy můžete posílat do pátku 18. 12. Výherce vy
     day: 14, type: 'offer', title: 'Warhammer: 10 % ve jménu Císaře',
     text: `Za Císaře! Nebo za Sigmara, jak je libo. Armáda se sama nepostaví.
 
-Při nákupu nad 3 000 Kč máte slevu 10 % na produkty Warhammer (40k a Age of Sigmar). ${HOW}
+Pokud nakoupíte produkty Warhammer (40k a Age of Sigmar) za více než 3 000 Kč, máte na ně slevu 10 %. ${CATNOTE} ${HOW}
 
 ${CAP} Platí do 31. 12.`,
     image: { src: IMG + 'warhammer.png', alt: 'Logo Warhammer' },
-    coupon: { code: 'GEEK-WAAAGH', value: 'Sleva 10 % na Warhammer (40k, Age of Sigmar) při nákupu nad 3 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    coupon: { code: 'GEEK-WAAAGH', value: 'Sleva 10 % na Warhammer (40k, Age of Sigmar) při jeho nákupu nad 3 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.barveni, urlLabel: 'Wargaming a barvení',
   },
   {
@@ -273,22 +274,22 @@ ${CAP} Platí do 31. 12.`,
     day: 17, type: 'offer', title: 'Harry Potter: 10 % z Příčné ulice',
     text: `Sova s dopisem dorazila. Bradavice posílají pozvánku na nákup.
 
-Při nákupu nad 2 000 Kč máte slevu 10 % na produkty Harry Potter. ${HOW}
+Pokud nakoupíte produkty Harry Potter za více než 2 000 Kč, máte na ně slevu 10 %. ${CATNOTE} ${HOW}
 
 ${CAP} Platí do 31. 12.`,
     image: { src: IMG + 'potter.jpeg', alt: 'Sada oblečení Harry Potter, kolej Zmijozel' },
-    coupon: { code: 'GEEK-BRADAVICE', value: 'Sleva 10 % na produkty Harry Potter při nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    coupon: { code: 'GEEK-BRADAVICE', value: 'Sleva 10 % na produkty Harry Potter při jejich nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.merch, urlLabel: 'Merch',
   },
   {
     day: 18, type: 'offer', title: 'Pokémon TCG: 5 % na chytání karet',
     text: `Pikachu hlásí: ve vánočním nákupu to chce pár boosterů navíc.
 
-Při nákupu nad 4 000 Kč máte slevu 5 % na produkty Pokémon TCG. ${HOW}
+Pokud nakoupíte produkty Pokémon TCG za více než 4 000 Kč, máte na ně slevu 5 %. ${CATNOTE} ${HOW}
 
 ${CAP} Platí do 31. 12.`,
     image: { src: IMG + 'pikachu.png', alt: 'Pikachu' },
-    coupon: { code: 'GEEK-POKEBALL', value: 'Sleva 5 % na Pokémon TCG při nákupu nad 4 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    coupon: { code: 'GEEK-POKEBALL', value: 'Sleva 5 % na Pokémon TCG při jeho nákupu nad 4 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.pokemon, urlLabel: 'Pokémoni',
   },
   {
@@ -330,27 +331,27 @@ Fotky můžete posílat do úterý 22. 12., výherce vyhlásíme ve středu 23. 
     day: 21, type: 'offer', title: 'One Piece TCG: 5 % na hledání pokladu',
     text: `Poklad Gold Rogera čeká a nová karta do balíčku taky.
 
-Při nákupu nad 4 000 Kč máte slevu 5 % na produkty One Piece TCG. ${HOW}
+Pokud nakoupíte produkty One Piece TCG za více než 4 000 Kč, máte na ně slevu 5 %. ${CATNOTE} ${HOW}
 
 ${CAP} Platí do 31. 12.`,
-    coupon: { code: 'GEEK-POKLAD', value: 'Sleva 5 % na One Piece TCG při nákupu nad 4 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    coupon: { code: 'GEEK-POKLAD', value: 'Sleva 5 % na One Piece TCG při jeho nákupu nad 4 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
     confirm: CONF_MIN, url: CAT.onepiece, urlLabel: 'One Piece TCG',
   },
   {
     day: 22, type: 'offer', title: 'StarCraft: 10 % a zerg rush do košíku',
     text: `Zerglingové jsou na cestě. Základnu už nepostavíte, ale s dnešní slevou si můžete postavit sbírku.
 
-Při nákupu nad 2 000 Kč máte slevu 10 % na produkty StarCraft. ${HOW}
+Pokud nakoupíte produkty StarCraft za více než 2 000 Kč, máte na ně slevu 10 %. ${CATNOTE} ${HOW}
 
 ${CAP} Platí do 31. 12.`,
-    coupon: { code: 'GEEK-ZERG', value: 'Sleva 10 % na produkty StarCraft při nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
+    coupon: { code: 'GEEK-ZERG', value: 'Sleva 10 % na produkty StarCraft při jejich nákupu nad 2 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 12.' },
     confirm: CONF_MIN, ...shop,
   },
   {
     day: 23, type: 'offer', title: 'Vánoční loot: 5 % na celý nákup',
     text: `Předvánoční loot je tady. Dnes si můžete přihodit cokoli, sleva se počítá z celého nákupu.
 
-Při nákupu nad 2 000 Kč máte slevu 5 %. ${HOW}
+Při nákupu nad 2 000 Kč máte slevu 5 % na celý nákup, bez omezení na kategorii. ${HOW}
 
 ${CAP} Platí do 24. 12.`,
     image: { src: IMG + 'kostky.jpeg', alt: 'Solnička a pepřenka ve tvaru kostek z Dungeons & Dragons' },
@@ -363,7 +364,7 @@ ${CAP} Platí do 24. 12.`,
 
 Dnes losujeme výherce hlavní ceny, poukazu do e-shopu Geek Hall. Výherci pošleme e-mail ještě dnes.
 
-A protože k Vánocům patří dárky pro všechny, máme jeden i pro vás: legendární drop na závěr. Při nákupu nad 5 000 Kč máte slevu 10 % na celý nákup. Platí pro objednávky do 10 000 Kč, kód zadejte do 31. 1. 2027.`,
+A protože k Vánocům patří dárky pro všechny, máme jeden i pro vás: legendární drop na závěr. Při nákupu nad 5 000 Kč máte slevu 10 % na celý nákup, bez omezení na kategorii. Platí pro objednávky do 10 000 Kč, kód zadejte do 31. 1. 2027.`,
     coupon: { code: 'GEEK-LEGENDA', value: 'Sleva 10 % na celý nákup nad 5 000 Kč', valid: 'Do objednávky 10 000 Kč, platí do 31. 1. 2027' },
     more: `Krásné Vánoce a ať se vám pod stromečkem sejde všechno, co si přejete.
 
