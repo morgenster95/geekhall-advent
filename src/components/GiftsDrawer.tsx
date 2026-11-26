@@ -32,7 +32,7 @@ export function GiftsDrawer({ open, user, newsletter, doors, onClose, onPick, on
         <header>
           <div>
             <div className="eyebrow">Váš účet</div>
-            <h2 id="gifts-title">Moje dárky</h2>
+            <h2 id="gifts-title">Moje karty</h2>
             {user && <div className="drawer-user">{user.email}</div>}
           </div>
           <button className="modal-close static" aria-label="Zavřít" onClick={onClose}><X size={20} /></button>

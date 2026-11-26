@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Eye, Gift, Snowflake, LogIn, Share2, Sparkles, Truck, Gamepad2, Gem } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Dices, Eye, Layers, LogIn, Share2, Sparkles } from 'lucide-react';
 import { availableDay, BASE, CATEGORIES, CONTACT_URL, CONTEST_DAYS, contestOpen, doors as ALL_DOORS, OPERATOR, PRIVACY_URL, RULES_URL, SHOP } from './content';
 import { CONTENT_MODE, DEMO_MODE, PREVIEW_KEY } from './config';
 import { backend } from './backend';
@@ -8,7 +8,7 @@ import { DoorGrid } from './components/DoorGrid';
 import { DoorModal } from './components/DoorModal';
 import { LoginDialog } from './components/LoginDialog';
 import { GiftsDrawer } from './components/GiftsDrawer';
-import { DiceArt, Celebrate, Drift, Lights, Logo, Snow } from './components/Decor';
+import { DiceArt, Celebrate, Logo } from './components/Decor';
 import { HeroArt } from './components/HeroArt';
 
 const EVE = Date.parse('2026-12-24T00:00:00+01:00');
@@ -169,7 +169,7 @@ export default function App() {
           <nav className="actions" aria-label="Ovládání">
             <button className="chip" onClick={share} aria-label="Sdílet kalendář"><Share2 size={16} /></button>
             {user || guest ? (
-              <button className="chip pink" onClick={() => setDrawer(true)}><Gift size={16} /><span>Moje dárky</span>{openedCount > 0 && <b className="badge">{openedCount}</b>}</button>
+              <button className="chip pink" onClick={() => setDrawer(true)}><Layers size={16} /><span>Moje karty</span>{openedCount > 0 && <b className="badge">{openedCount}</b>}</button>
             ) : (
               <button className="chip pink" onClick={() => setLogin({ open: true })}><LogIn size={16} /><span>Přihlásit</span></button>
             )}
@@ -180,29 +180,32 @@ export default function App() {
 
       {/* ------------------------------------------------------------- HERO */}
       <section className="hero">
-        <Snow />
-        <Lights className="hero-lights" count={22} />
+        <div className="hero-bg" aria-hidden="true" />
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow light"><Snowflake size={15} /> Adventní kalendář 2026</div>
-            <h1><span className="hl">Advent</span><br />plný slev, her<br />a překvapení</h1>
-            <p>24 dní, 24 okének. Každý den o půlnoci se odemkne nová nabídka, hra, tip nebo soutěž. Slevové kódy uplatníte v e-shopu Geek Hall.</p>
+            <div className="eyebrow light"><Sparkles size={15} /> Adventní kalendář 2026</div>
+            <h1>Rozbal si <span className="hl">advent</span><small>s Geek Hallem</small></h1>
+            <p>24 karet, 24 překvapení. Každý den o půlnoci se odemkne nová karta: sleva, hra, tip nebo soutěž. Sbírej je všechny a slevové kódy zahraj v košíku.</p>
             <div className="hero-cta">
-              <a href="#kalendar" className="btn pink big">{user || guest ? 'Ke kalendáři' : 'Vstoupit do kalendáře'} <ArrowRight size={18} /></a>
+              <a href="#kalendar" className="btn pink big">{user || guest ? 'K mé sbírce' : 'Rozbalit první kartu'} <ArrowRight size={18} /></a>
               {!user && !guest && <button className="btn ghost" onClick={() => setLogin({ open: true })}><LogIn size={17} /> Přihlásit se</button>}
             </div>
+            <ul className="hero-stats" aria-label="Co v kalendáři najdete">
+              <li><b>13</b><span>slevových kódů</span></li>
+              <li><b>3</b><span>soutěže</span></li>
+              <li><b>24</b><span>karet ke sbírání</span></li>
+            </ul>
           </div>
           <HeroArt />
         </div>
         <div className="wrap countdown" aria-label="Odpočet do Štědrého dne">
-          <div className="cd-label">Do Štědrého dne zbývá</div>
+          <div className="cd-label"><Dices size={20} /> Do konce hry zbývá</div>
           <div className="cd-time">
             {countdown.map((v, i) => (
               <div key={i}><strong>{String(v).padStart(2, '0')}</strong><span>{[plural(v, 'den', 'dny', 'dní'), plural(v, 'hodina', 'hodiny', 'hodin'), plural(v, 'minuta', 'minuty', 'minut'), plural(v, 'sekunda', 'sekundy', 'sekund')][i]}</span></div>
             ))}
           </div>
         </div>
-        <Drift className="hero-drift" />
       </section>
 
       {/* --------------------------------------------------------- CALENDAR */}
@@ -210,45 +213,44 @@ export default function App() {
         <section id="kalendar" className="calendar wrap">
           <div className="cal-head">
             <div>
-              <div className="eyebrow">Každý den jedno okénko</div>
-              <h2>Vyberte si <span className="hl">dnešní překvapení</span></h2>
+              <div className="eyebrow">Každý den jedna nová karta</div>
+              <h2>Vyber si <span className="hl">kartu dne</span></h2>
             </div>
-            <p>Slevové kódy, kvízy, užitečné tipy a tři soutěže o skvělé výhry. Co otevřete, to si pamatujeme u vašeho účtu.</p>
+            <p>Slevové kódy, kvízy, užitečné tipy a tři soutěže o skvělé výhry. Každá karta, kterou otočíš, zůstane ve tvé sbírce.</p>
           </div>
           <div className="cal-bar">
             <div className="progress">
-              <span>{user || guest ? <><b>{openedCount}</b> z 24 okének otevřeno</> : 'Přihlaste se a začněte otevírat'}</span>
+              <span>{user || guest ? <>Sbírka: <b>{openedCount}</b> z 24 karet</> : 'Přihlaste se a začněte sbírat'}</span>
               <div className="track"><i style={{ width: `${(openedCount / 24) * 100}%` }} /></div>
             </div>
             <span className="status">{status}</span>
           </div>
           <DoorGrid max={max} opened={openedMap} opening={opening} onOpen={openDoor} />
-          <div className="legend" aria-hidden="true"><i className="t-offer" />Nabídka<i className="t-game" />Hra<i className="t-tip" />Tip<i className="t-contest" />Soutěž<i className="t-finale" />Finále</div>
+          <div className="legend" aria-hidden="true"><i className="t-offer" />Sleva<i className="t-game" />Hra<i className="t-tip" />Tip<i className="t-contest" />Soutěž<i className="t-finale" />Finále</div>
           <div className="cal-foot">
-            {user ? <span>Přihlášeni jako <b>{user.email}</b> · <button className="link" onClick={() => setDrawer(true)}>Moje dárky</button></span>
+            {user ? <span>Přihlášeni jako <b>{user.email}</b> · <button className="link" onClick={() => setDrawer(true)}>Moje karty</button></span>
               : !guest && <button className="btn pink" onClick={() => setLogin({ open: true })}><LogIn size={17} /> Přihlásit se a začít</button>}
           </div>
         </section>
 
         <section className="how wrap">
-          <h2>Jak to funguje</h2>
+          <h2>Jak se hraje</h2>
           <ol>
-            <li><b>1</b><div><strong>Přihlaste se</strong><span>Jedním klikem přes Google.</span></div></li>
-            <li><b>2</b><div><strong>Otevírejte okénka</strong><span>Každý den o půlnoci se odemkne nové.</span></div></li>
-            <li><b>3</b><div><strong>Využijte slevový kód</strong><span>Zadejte ho v košíku e-shopu.</span></div></li>
+            <li><b>1</b><div><strong>Přihlas se</strong><span>Jedním klikem přes Google, ať ti sbírka zůstane.</span></div></li>
+            <li><b>2</b><div><strong>Otáčej karty</strong><span>Každý den o půlnoci se odemkne nová.</span></div></li>
+            <li><b>3</b><div><strong>Zahraj kód v košíku</strong><span>Slevu uplatníš v e-shopu Geek Hall.</span></div></li>
           </ol>
         </section>
 
-        <section className="services wrap">
-          <a href={SHOP + 'kategorie/sberatelske-hry-2/'}><Gem size={26} /><strong>Sběratelské hry</strong><span>Pokémon, One Piece, Lorcana, Magic a další karetní hry.</span><ArrowUpRight size={18} /></a>
-          <a href={SHOP + 'kategorie/deskove-hry/'}><Gamepad2 size={26} /><strong>Deskové hry</strong><span>Strategické, rodinné, párty i kooperativní hry na dlouhé zimní večery.</span><ArrowUpRight size={18} /></a>
-          <a href={CONTACT_URL}><Truck size={26} /><strong>Kontakt a doprava</strong><span>Doprava zdarma nad 3 000 Kč. Poradíme s výběrem i doručením před Vánoci.</span><ArrowUpRight size={18} /></a>
+        <section className="services wrap" aria-label="Prohlédni si regály">
+          <a className="shelf" href={SHOP + 'kategorie/sberatelske-hry-2/pokemoni/'}><img src={BASE + 'img/pikachu.png'} alt="" loading="lazy" /><strong>Sběratelské karty</strong><span>Pokémon, One Piece, Lorcana, Magic a další TCG.</span><ArrowUpRight size={18} /></a>
+          <a className="shelf" href={SHOP + 'kategorie/deskove-hry/'}><img className="on-white" src={BASE + 'img/strategicke.jpg'} alt="" loading="lazy" /><strong>Deskové hry</strong><span>Strategické, rodinné, párty i kooperativní hry.</span><ArrowUpRight size={18} /></a>
+          <a className="shelf" href={SHOP + 'kategorie/merch/'}><img src={BASE + 'img/obiwan.png'} alt="" loading="lazy" /><strong>Merch a figurky</strong><span>Figurky, plyšáci, oblečení a geek domácnost.</span><ArrowUpRight size={18} /></a>
         </section>
 
         <section className="closing">
-          <Drift className="closing-drift" />
-          <Snowflake size={30} />
-          <h2>Krásný advent přeje <span className="hl">tým Geek Hall</span></h2>
+          <Dices size={34} />
+          <h2>Ať ti padnou samé dvacítky! Přeje <span className="hl">tým Geek Hall</span></h2>
         </section>
       </main>
 

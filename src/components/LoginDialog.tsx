@@ -61,7 +61,7 @@ export function LoginDialog({ open, reason, onClose, onSignedIn }: Props) {
         <div className="login-logo"><Logo /></div>
         <div className="eyebrow center">Váš adventní kalendář</div>
         <h2 id="login-title">{reason || 'Přihlaste se a otevírejte okénka'}</h2>
-        <p className="login-lead">Otevřená okénka a slevové kódy si pamatujeme za vás, najdete je kdykoli v sekci Moje dárky na mobilu i počítači.</p>
+        <p className="login-lead">Otevřená okénka a slevové kódy si pamatujeme za vás, najdete je kdykoli v sekci Moje karty na mobilu i počítači.</p>
 
         {fb ? (
           <button className="btn google" onClick={google} disabled={busy}>

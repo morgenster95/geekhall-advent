@@ -3,9 +3,8 @@ import { NEWSLETTER_CONSENT } from '../config';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Camera, Check, ChevronLeft, ChevronRight, Copy, Share2, X } from 'lucide-react';
 import type { Door, ListItem } from '../types';
-import { LABELS, typeIcon } from './DoorGrid';
+import { LABELS, RARITY, stars, typeIcon } from './DoorGrid';
 import { GameView } from './Games';
-import { Snow } from './Decor';
 
 /** text s odstavci (prázdný řádek) a zalomeními řádků */
 function Rich({ text, className }: { text: string; className?: string }) {
@@ -110,11 +109,12 @@ export function DoorModal({ door, email, preview, draft, entered, canPrev, canNe
       {door && (
         <div className="modal-card" key={door.day}>
           <button className="modal-close" aria-label="Zavřít" onClick={onClose}><X size={20} /></button>
-          <div className={'modal-head t-' + door.type}>
-            <Snow count={26} />
-            <span className="ribbon" aria-hidden="true"><i /></span>
-            <div className="modal-day"><strong>{door.day}</strong><span>prosince</span></div>
-            <div className="modal-glyph">{typeIcon(door.type, 56)}</div>
+          <div className={'modal-head t-' + door.type + (door.type === 'finale' ? ' holo' : '')}>
+            <div className="mh-card">
+              <div className="mh-top"><b>{door.day}. 12.</b><i>{stars(door.type)}</i></div>
+              <div className="mh-art">{typeIcon(door.type, 64)}<em className="sp s1" /><em className="sp s2" /><em className="sp s3" /></div>
+              <div className="mh-foot"><b>{LABELS[door.type]}</b><small>{RARITY[door.type]} karta č. {door.day}</small></div>
+            </div>
           </div>
           <div className="modal-body" ref={bodyRef}>
             <div className="eyebrow">{typeIcon(door.type, 14)} {LABELS[door.type]}</div>
@@ -169,7 +169,7 @@ export function DoorModal({ door, email, preview, draft, entered, canPrev, canNe
                   <div className="coupon-row secret"><span>Tajný kupón Geek Hall · {door.day}. prosince</span></div>
                 )}
                 <small>{door.coupon.valid.replace(/\.$/, '')}. Kód zadejte v košíku e-shopu.</small>
-                <small>Kupón máte uložený i v sekci <b>Moje dárky</b>.</small>
+                <small>Kupón máte uložený i v sekci <b>Moje karty</b>.</small>
               </div>
             )}
 
@@ -222,7 +222,7 @@ export function DoorModal({ door, email, preview, draft, entered, canPrev, canNe
                     <button className="btn primary" onClick={() => onNewsletterOffer(true)}>Ano, chci novinky</button>
                     <button className="btn ghost-dark" onClick={() => onNewsletterOffer(false)}>Teď ne</button>
                   </div>
-                  <small>Kupóny z kalendáře dostanete tak jako tak. Nastavení změníte kdykoli v Moje dárky.</small>
+                  <small>Kupóny z kalendáře dostanete tak jako tak. Nastavení změníte kdykoli v Moje karty.</small>
                 </div>
               </div>
             )}
