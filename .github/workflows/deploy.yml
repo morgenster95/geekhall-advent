@@ -1,0 +1,47 @@
+# Nasazení na Firebase Hosting (projekt geekhall-advent, tarif Spark).
+#   push do main      → TESTOVACÍ web (preview kanál „test“, adresa geekhall-advent--test-….web.app, platí 30 dní)
+#   push do produkce  → OSTRÝ web (geekhall-advent.web.app)
+# firestore.rules se nasazují v obou případech (testovací i ostrý web sdílí jednu databázi).
+# Potřebuje v GitHubu (Settings → Secrets and variables → Actions):
+#   - secret FIREBASE_SERVICE_ACCOUNT = JSON klíč servisního účtu (viz README, sekce Nasazení)
+#   - (volitelně) proměnnou FIREBASE_PROJECT_ID, výchozí je geekhall-advent
+name: Nasazení na Firebase
+
+on:
+  push:
+    branches: [main, produkce]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT != '' }}
+      PROJECT: ${{ vars.FIREBASE_PROJECT_ID || 'geekhall-advent' }}
+    steps:
+      - if: env.HAS_KEY != 'true'
+        run: echo "::warning::Chybí secret FIREBASE_SERVICE_ACCOUNT – nasazení se přeskakuje (viz README)."
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - if: env.HAS_KEY == 'true'
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      - name: Testovací web (preview kanál „test“)
+        if: env.HAS_KEY == 'true' && github.ref_name == 'main'
+        run: npx --yes firebase-tools@15 hosting:channel:deploy test --expires 30d --project "$PROJECT" --non-interactive
+      - name: Ostrý web (live)
+        if: env.HAS_KEY == 'true' && github.ref_name == 'produkce'
+        run: npx --yes firebase-tools@15 deploy --only hosting --project "$PROJECT" --non-interactive
+      - name: Pravidla databáze (firestore.rules)
+        if: env.HAS_KEY == 'true'
+        run: npx --yes firebase-tools@15 deploy --only firestore:rules --project "$PROJECT" --non-interactive

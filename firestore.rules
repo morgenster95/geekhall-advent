@@ -1,0 +1,74 @@
+rules_version = '2';
+// Pravidla pro Firestore. Nasazují se automaticky s webem (firebase.json),
+// případně je lze vložit ručně do Firebase Console → Firestore Database → Rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Správci, kteří na /?admin stahují kontakty. Stejný seznam je v src/config.ts (ADMIN_EMAILS).
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower() in [
+          'databali4market@gmail.com'
+        ];
+    }
+
+    // Profil a postup uživatele: každý čte a zapisuje jen svůj dokument, správce čte všechny.
+    match /users/{uid} {
+      allow read: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['email', 'name', 'newsletter', 'newsletterAt', 'newsletterConsent',
+             'newsletterRevokedAt', 'newsletterAsked', 'createdAt', 'lastSeenAt', 'opened', 'openedPreview', 'entries', 'entriesPreview'])
+        && request.resource.data.email == request.auth.token.email.lower()
+        && (!('newsletter' in request.resource.data) || request.resource.data.newsletter is bool);
+      allow delete: if false;
+    }
+
+    // Uzávěrky soutěží (23:59:59 českého času): den 5 → 23. 12., den 13 → 18. 12., den 19 → 22. 12. 2026.
+    function deadline(day) {
+      return day == 5 ? timestamp.value(1798066799000)
+        : day == 13 ? timestamp.value(1797634799000)
+        : timestamp.value(1797980399000);
+    }
+    // Náhledové odpovědi (id s „nahled_“) se do exportu nepočítají a uzávěrka pro ně neplatí.
+    function isPreview(entryId) {
+      return entryId.matches('.*_nahled_[0-9]+');
+    }
+    function validContact(d) {
+      return d.contact is string && d.contact.size() >= 5 && d.contact.size() <= 254 && d.contact.matches('[^@ ]+@[^@ ]+[.][^@ ]+');
+    }
+
+    // Soutěžní odpovědi: jen vlastní, jen jednou (bez úprav), max. 1000 znaků, do uzávěrky. Správce čte všechny.
+    match /entries/{entryId} {
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && entryId.matches(request.auth.uid + '_(nahled_)?[0-9]+')
+        && request.resource.data.answer is string
+        && request.resource.data.answer.size() >= 1
+        && request.resource.data.answer.size() <= 1000
+        && validContact(request.resource.data)
+        && request.resource.data.day in [5, 13, 19]
+        && entryId.matches('.*_' + string(request.resource.data.day))
+        && request.resource.data.preview == isPreview(entryId)
+        && (isPreview(entryId) || request.time <= deadline(request.resource.data.day));
+      allow read: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
+      allow update, delete: if false;
+    }
+
+    // Fotky rozbitých displejů (soutěž 19): JPEG jako data URL, zapisují se spolu s odpovědí, max. ~900 kB.
+    match /photos/{entryId} {
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && entryId.matches(request.auth.uid + '_(nahled_)?19')
+        && request.resource.data.day == 19
+        && request.resource.data.photo is string
+        && request.resource.data.photo.size() <= 900000
+        && request.resource.data.photo.matches('data:image/jpeg;base64,.*')
+        && request.resource.data.preview == isPreview(entryId)
+        && (isPreview(entryId) || request.time <= deadline(19))
+        && existsAfter(/databases/$(database)/documents/entries/$(entryId));
+      allow read: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
+      allow update, delete: if false;
+    }
+  }
+}
