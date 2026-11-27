@@ -249,7 +249,7 @@ export default function App() {
           <ul className="why">
             <li className="w1"><i><UserRound /></i><span>Přihlaste se jedním klikem přes Google</span></li>
             <li className="w2"><i><Layers /></i><span>Každou půlnoc roztrhněte nový booster</span></li>
-            <li className="w3"><i><ShoppingCart /></i><span>Kód z karty zahrajte v košíku e-shopu</span></li>
+            <li className="w3"><i><ShoppingCart /></i><span>Kód z karty zadejte v košíku e-shopu</span></li>
           </ul>
         </section>
 

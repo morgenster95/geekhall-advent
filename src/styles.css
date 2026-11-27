@@ -706,3 +706,9 @@ body { overflow-x: clip; }
   .grid { gap: 14px 8px; }
   .hero-chips li { font-size: 13px; padding: 6px 12px; }
 }
+
+/* odpočet: celý box pod úvodem, bez překryvu se sněhovou závějí */
+.hero { margin-bottom: 0; }
+.hero-drift { bottom: -3px; }
+.countdown { margin-top: 28px; position: relative; z-index: 3; }
+.hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 10px; background: var(--bg); z-index: 2; pointer-events: none; }

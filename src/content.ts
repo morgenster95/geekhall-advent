@@ -63,7 +63,7 @@ export const doors: Door[] = [
     day: 1, type: 'tip', title: 'Level 1: Vítejte v adventu',
     text: `Hra začíná. Každou půlnoc tu čeká nový booster a v něm sleva, hra, tip nebo soutěž. Žádné prázdné obaly.
 
-Slevové kódy zahrajete v košíku e-shopu Geek Hall. U většiny platí sleva jen na produkty z jedné kategorie, třeba Warhammer, Pokémon nebo deskovky, a minimální nákup se počítá jen z nich. Podmínky najdete vždy u kódu.
+Slevové kódy zadáte v košíku e-shopu Geek Hall. U většiny platí sleva jen na produkty z jedné kategorie, třeba Warhammer, Pokémon nebo deskovky, a minimální nákup se počítá jen z nich. Podmínky najdete vždy u kódu.
 
 Bonus na startu: doprava je u nás zdarma při nákupu nad 3 000 Kč.
 
