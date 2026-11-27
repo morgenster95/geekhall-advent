@@ -15,6 +15,16 @@ const EVE = Date.parse('2026-12-24T00:00:00+01:00');
 const draft = CONTENT_MODE !== 'live';
 const SS = 'gh-';
 
+/** Kontrolní režim: ?nahled=geekadvent&vse – všechny karty jsou otočené a jdou proklikat (nic se neukládá). */
+const SHOW_ALL = (() => {
+  try {
+    const q = new URL(location.href).searchParams;
+    if (q.get('nahled') === PREVIEW_KEY && q.has('vse')) sessionStorage.setItem(SS + 'vse', '1');
+    else if (q.get('nahled') !== null && q.get('nahled') !== PREVIEW_KEY) sessionStorage.removeItem(SS + 'vse');
+    return sessionStorage.getItem(SS + 'vse') === '1';
+  } catch { return false; }
+})();
+
 function readPreview(): boolean {
   try {
     const url = new URL(location.href);
@@ -87,6 +97,7 @@ export default function App() {
 
   const openedMap = useMemo(() => {
     const m = new Map<number, Door['type']>();
+    if (SHOW_ALL) { for (const d of ALL_DOORS) m.set(d.day, d.type); return m; }
     for (const d of Object.keys(progress.opened).map(Number)) if (d <= max) m.set(d, ALL_DOORS[d - 1]?.type);
     return m;
   }, [progress.opened, max]);
@@ -96,7 +107,7 @@ export default function App() {
     if (el) trigger.current = el;
     if (day > max) { notify(`Okénko ${day} se odemkne ${day}. prosince o půlnoci.`); return; }
     if (!user && !guest) { setLogin({ open: true, reason: 'Přihlaste se a otevřete okénko', pendingDay: day }); return; }
-    if (!progress.opened[day]) {
+    if (!progress.opened[day] && !SHOW_ALL) {
       setOpening(day);
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(() => setBurst((b) => b + 1), 760);
       await new Promise((r) => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1450));
@@ -143,7 +154,8 @@ export default function App() {
 
   const door = modalDay ? ALL_DOORS[modalDay - 1] : null;
   const openedCount = openedMap.size;
-  const status = preview ? 'Režim náhledu – všechna okénka jsou odemčená'
+  const status = SHOW_ALL ? 'Kontrolní režim – všech 24 karet je otočených'
+    : preview ? 'Režim náhledu – všechna okénka jsou odemčená'
     : max === 0 ? 'První okénko se odemkne 1. prosince o půlnoci'
     : max >= 24 ? 'Všechna okénka jsou odemčená. Veselé Vánoce!'
     : openedMap.has(max) ? `Dnešní okénko máte otevřené. Zítra čeká ${max + 1}.`
