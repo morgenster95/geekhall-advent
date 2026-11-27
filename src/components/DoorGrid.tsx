@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check, Gamepad2, Lightbulb, PartyPopper, Percent, Sparkles, Trophy } from 'lucide-react';
+import { Check, Gamepad2, Lightbulb, PartyPopper, Percent, Scissors, Sparkles, Trophy } from 'lucide-react';
 import type { DoorType } from '../types';
 import { doors } from '../content';
 import { Pack } from './Pack';
@@ -22,6 +22,11 @@ export const LABELS: Record<DoorType, string> = {
 export const STARS: Record<DoorType, number> = { tip: 1, game: 2, offer: 3, contest: 4, finale: 5 };
 export const RARITY: Record<DoorType, string> = { tip: 'Běžná', game: 'Neobvyklá', offer: 'Vzácná', contest: 'Epická', finale: 'Legendární' };
 export const stars = (t: DoorType) => '★'.repeat(STARS[t]);
+/** velká odměna na kartě: u slev „−10 %“, jinak null (zobrazí se ikona) */
+export const rewardText = (coupon?: { value: string }) => {
+  const m = coupon?.value.match(/(\d+)\s*%/);
+  return m ? `−${m[1]} %` : null;
+};
 
 function useCols() {
   const get = () => (innerWidth >= 900 ? 6 : innerWidth >= 560 ? 4 : 3);
@@ -61,20 +66,19 @@ export function DoorGrid({ max, opened, opening, onOpen }: Props) {
                 onClick={(e) => onOpen(d.day, e.currentTarget)}
                 style={{ animationDelay: `${i * 24}ms` }}
               >
-                <span className="card-inner">
-                  <span className="face back">
-                    <Pack badge={d.day} locked={locked} />
-                    {today && <span className="card-badge">dnes</span>}
+                <span className="pk-front">
+                  <span className="cf">
+                    <span className="cf-head"><b>{d.day}. 12.</b><i>{stars(d.type)}</i></span>
+                    <span className="cf-art">{rewardText(d.coupon) ? <strong className="cf-pct">{rewardText(d.coupon)}</strong> : typeIcon(d.type, 40)}<em className="sp s1" /><em className="sp s2" /><em className="sp s3" /></span>
+                    <span className="cf-foot"><b>{LABELS[d.type]}</b><small>{RARITY[d.type]}</small></span>
                   </span>
-                  <span className="pk-tear" aria-hidden="true" />
-                  <span className="face front">
-                    <span className="cf">
-                      <span className="cf-head"><b>{d.day}. 12.</b><i>{stars(d.type)}</i></span>
-                      <span className="cf-art">{typeIcon(d.type, 40)}<em className="sp s1" /><em className="sp s2" /><em className="sp s3" /></span>
-                      <span className="cf-foot"><b>{LABELS[d.type]}</b><small>{RARITY[d.type]}</small></span>
-                    </span>
-                    {isOpen && <span className="cf-tick"><Check size={11} /></span>}
-                  </span>
+                  {isOpen && <span className="cf-tick"><Check size={11} /></span>}
+                </span>
+                <span className="pk-wrap">
+                  <span className="pk-body"><Pack badge={d.day} locked={locked} /></span>
+                  <span className="pk-top"><Pack badge={d.day} locked={locked} /></span>
+                  <span className="pk-cut" aria-hidden="true"><i /><Scissors size={22} /></span>
+                  {today && <span className="card-badge">dnes</span>}
                 </span>
                 <span className="pk-burst" aria-hidden="true" />
               </button>

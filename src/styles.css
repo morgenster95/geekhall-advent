@@ -504,64 +504,82 @@ body { overflow-x: clip; }
 .binder { padding: 0; background: none; box-shadow: none; }
 .grid { gap: 20px 14px; }
 .tile-slot { display: block; }
-.card { position: relative; display: block; width: 100%; aspect-ratio: 5 / 8; padding: 0; border: 0; background: none; perspective: 900px; container-type: inline-size; animation: cardIn .5s both; transition: transform .2s; }
+.card { position: relative; display: block; width: 100%; aspect-ratio: 5 / 8; padding: 0; border: 0; background: none; container-type: inline-size; animation: cardIn .5s both; transition: transform .2s; -webkit-tap-highlight-color: transparent; }
 @keyframes cardIn { from { transform: translateY(14px) scale(.94); opacity: 0; } }
-.card:hover:not(.locked):not(.opened) { transform: translateY(-6px) rotate(-1.4deg); }
+.card:hover:not(.locked):not(.opened):not(.opening) { transform: translateY(-6px) rotate(-1.6deg); }
 .card.today { z-index: 2; }
-.card-inner { position: absolute; inset: 0; display: block; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3,.8,.3,1.1); }
-.card.opened .card-inner { transform: rotateY(180deg); }
-.face { position: absolute; inset: 0; display: block; border-radius: 8px; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
-.back { background: none; border: 0; }
-/* obal boosteru */
-.pack { position: absolute; inset: 0; display: block; border-radius: 8px; overflow: hidden; container-type: inline-size; background: linear-gradient(165deg, var(--p1), var(--p2)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
-.pack::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, rgba(255,255,255,.17) 0 7cqw, transparent 7cqw 18cqw); }
+.pk-wrap { position: absolute; inset: 0; display: block; }
+.pk-body, .pk-top { position: absolute; inset: 0; display: block; filter: drop-shadow(0 10px 10px rgba(0,0,0,.28)); }
+.pk-body { clip-path: inset(15% -4px -4px -4px); z-index: 2; }
+.pk-top { clip-path: inset(-4px -4px 85% -4px); z-index: 3; }
+.card.opened .pk-wrap { display: none; }
+/* obal boosteru: široké zubaté konce, užší pas, fólie s leskem */
+.pack { position: absolute; inset: 0; display: block; overflow: hidden; container-type: inline-size; background: linear-gradient(165deg, var(--p1), var(--p2));
+  clip-path: polygon(0 0, 100% 0, 100% 7%, 97.4% 10.5%, 97.4% 89.5%, 100% 93%, 100% 100%, 0 100%, 0 93%, 2.6% 89.5%, 2.6% 10.5%, 0 7%); }
+.pack::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, rgba(255,255,255,.17) 0 7cqw, transparent 7cqw 18cqw), linear-gradient(90deg, rgba(0,0,0,.18), transparent 12%, transparent 88%, rgba(0,0,0,.18)); }
 .pack::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,.5) 46%, transparent 60%); background-size: 260% 100%; background-position: 130% 0; animation: shine 5s ease-in-out infinite; }
 @keyframes shine { 0%, 55% { background-position: 130% 0; } 100% { background-position: -130% 0; } }
-.pk-crimp { position: absolute; left: 0; right: 0; height: 9cqw; z-index: 2; background: repeating-linear-gradient(90deg, rgba(255,255,255,.62) 0 1.4cqw, rgba(0,0,0,.2) 1.4cqw 2.8cqw), var(--p1); }
-.pk-crimp.top { top: 0; box-shadow: 0 .8cqw 0 rgba(0,0,0,.15); }
-.pk-crimp.bottom { bottom: 0; box-shadow: 0 -.8cqw 0 rgba(0,0,0,.15); }
-.pk-flake { position: absolute; z-index: 1; top: 12cqw; right: 8cqw; width: 14cqw; color: rgba(255,255,255,.75); }
+.pk-crimp { position: absolute; left: 0; right: 0; height: 8cqw; z-index: 2; background: repeating-linear-gradient(90deg, rgba(255,255,255,.65) 0 1.2cqw, rgba(0,0,0,.24) 1.2cqw 2.4cqw), var(--p1); }
+.pk-crimp.top { top: 0; box-shadow: 0 .8cqw 0 rgba(0,0,0,.16); }
+.pk-crimp.bottom { bottom: 0; box-shadow: 0 -.8cqw 0 rgba(0,0,0,.16); }
+.pk-flake { position: absolute; z-index: 1; top: 11cqw; right: 9cqw; width: 13cqw; color: rgba(255,255,255,.78); }
 .pk-flake svg { width: 100%; height: auto; display: block; }
-.pk-mark { position: absolute; z-index: 1; top: 14cqw; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 10.5cqw; letter-spacing: .16em; color: #fff; text-shadow: 0 .8cqw 0 rgba(0,0,0,.22); }
-.pk-emblem { position: absolute; z-index: 1; left: 50%; top: 36%; width: 56cqw; margin-left: -28cqw; filter: drop-shadow(0 2cqw 2.4cqw rgba(0,0,0,.4)); }
+.pk-mark { position: absolute; z-index: 1; top: 13cqw; left: 0; right: 0; text-align: center; font-weight: 900; font-size: 10.5cqw; letter-spacing: .16em; color: #fff; text-shadow: 0 .8cqw 0 rgba(0,0,0,.22); }
+.pk-emblem { position: absolute; z-index: 1; left: 50%; top: 35%; width: 54cqw; margin-left: -27cqw; filter: drop-shadow(0 2cqw 2.4cqw rgba(0,0,0,.4)); }
 .pk-emblem svg { width: 100%; height: auto; display: block; }
 .pk-badge { position: absolute; z-index: 1; left: 50%; bottom: 14cqw; transform: translateX(-50%); min-width: 34cqw; padding: 0 6cqw; height: 22cqw; display: grid; place-items: center; font-weight: 900; font-size: 16cqw; line-height: 1; border-radius: 999px; background: #fff; color: var(--p2); box-shadow: 0 1.4cqw 0 rgba(0,0,0,.22); }
-.pk-lock { position: absolute; z-index: 3; left: 7cqw; bottom: 12cqw; width: 14cqw; color: #fff; opacity: .9; }
+.pk-lock { position: absolute; z-index: 3; left: 9cqw; bottom: 12cqw; width: 14cqw; color: #fff; opacity: .92; }
 .pk-lock svg { width: 100%; height: auto; display: block; }
 .pk-final .pack::before { background: repeating-linear-gradient(45deg, rgba(220,53,69,.5) 0 6cqw, rgba(255,255,255,.38) 6cqw 12cqw); }
 .card.locked { cursor: not-allowed; }
-.card.locked .back { filter: grayscale(.9) brightness(.82); }
+.card.locked .pk-body, .card.locked .pk-top { filter: grayscale(.9) brightness(.82) drop-shadow(0 6px 6px rgba(0,0,0,.2)); }
 .card.locked .pack::after { display: none; }
-.card.today .back { filter: drop-shadow(0 0 14px rgba(255,255,255,.7)); }
-.card.today .card-inner { animation: todayWiggle 2.4s ease-in-out infinite .6s; }
+.card.today .pk-wrap { animation: todayWiggle 2.4s ease-in-out infinite .6s; }
+.card.today .pk-body, .card.today .pk-top { filter: drop-shadow(0 0 12px rgba(255,255,255,.85)) drop-shadow(0 10px 10px rgba(0,0,0,.28)); }
 @keyframes todayWiggle { 0%, 100% { transform: rotate(0) scale(1); } 15% { transform: rotate(-4deg) scale(1.05); } 30% { transform: rotate(4deg) scale(1.05); } 45% { transform: rotate(0) scale(1); } }
-.card-badge { position: absolute; z-index: 4; right: 5cqw; top: 12cqw; background: #202124; color: #fff; font-weight: 700; font-size: 10cqw; padding: 1px 7cqw; border-radius: 999px; transform: rotate(8deg); }
-/* otevření: třes, utržení lemu, záblesk, otočení karty */
-.pk-tear { position: absolute; left: 0; right: 0; top: 0; height: 15%; z-index: 5; display: none; border-radius: 8px 8px 0 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,.62) 0 1.4cqw, rgba(0,0,0,.2) 1.4cqw 2.8cqw), var(--p1); transform: translateZ(3px); backface-visibility: hidden; -webkit-backface-visibility: hidden; transform-origin: 0 100%; }
-.card.opening { z-index: 6; }
-.card.opening .pk-tear { display: block; animation: tear 1.35s ease-in forwards; }
-.card.opening .card-inner { animation: packOpen 1.35s ease-in-out forwards; }
-.card.opening .pack::after { animation: none; }
-.pk-burst { position: absolute; left: 50%; top: 50%; width: 320%; aspect-ratio: 1; margin: -160% 0 0 -160%; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 7; background: radial-gradient(circle, #fff 0, rgba(255,255,255,.92) 14%, rgba(255,224,102,.55) 32%, transparent 60%), repeating-conic-gradient(from 0deg, rgba(255,255,255,.7) 0 5deg, transparent 5deg 15deg); -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 68%); mask-image: radial-gradient(circle, #000 25%, transparent 68%); }
-.card.opening .pk-burst { animation: burst 1.35s ease-out forwards; }
-@keyframes packOpen {
-  0% { transform: rotate(0) scale(1); } 7% { transform: rotate(-6deg) scale(1.05); } 14% { transform: rotate(6deg) scale(1.07); } 21% { transform: rotate(-7deg) scale(1.09); }
-  28% { transform: rotate(7deg) scale(1.1); } 36% { transform: rotate(0) scale(1.12); } 56% { transform: rotateY(0) scale(1.16); }
-  72% { transform: rotateY(95deg) scale(1.3); } 100% { transform: rotateY(180deg) scale(1); } }
-@keyframes tear { 0%, 38% { transform: translateZ(3px) rotate(0); opacity: 1; } 62% { transform: translateZ(3px) translate(40%, -170%) rotate(38deg); opacity: 1; } 100% { transform: translateZ(3px) translate(80%, -330%) rotate(70deg); opacity: 0; } }
-@keyframes burst { 0%, 42% { opacity: 0; transform: scale(.15) rotate(0); } 58% { opacity: 1; transform: scale(.8) rotate(20deg); } 100% { opacity: 0; transform: scale(1.5) rotate(60deg); } }
-/* líc karty */
-.front { transform: rotateY(180deg); background: #fff; padding: 4cqw; border: 1px solid #202124; box-shadow: 0 10px 18px -10px rgba(0,0,0,.55); }
+.card-badge { position: absolute; z-index: 4; right: 6cqw; top: 12cqw; background: #202124; color: #fff; font-weight: 700; font-size: 10cqw; padding: 1px 7cqw; border-radius: 999px; transform: rotate(8deg); }
+
+/* karta uvnitř obalu: vyjede po odstřižení lemu */
+.pk-front { position: absolute; inset: 0; z-index: 1; display: block; background: #fff; padding: 4cqw; border: 1px solid #202124; border-radius: 8px; box-shadow: 0 10px 18px -10px rgba(0,0,0,.55); opacity: 0; }
+.card.opened .pk-front { opacity: 1; }
 .cf { position: relative; height: 100%; display: grid; grid-template-rows: auto 1fr auto; border-radius: 4px; overflow: hidden; background: linear-gradient(160deg, var(--p1), var(--p2)); color: #fff; text-align: left; }
 .cf-head { display: flex; justify-content: space-between; align-items: center; padding: 3.5cqw 6cqw; background: #fff; color: var(--navy); line-height: 1; }
 .cf-head b { font-weight: 700; font-size: 10cqw; }
 .cf-head i { font-style: normal; color: var(--gold); font-size: 8cqw; }
 .cf-art { position: relative; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, rgba(255,255,255,.55), transparent 62%), repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,.17) 0 10deg, transparent 10deg 20deg); }
 .cf-art svg { width: 38cqw; height: 38cqw; filter: drop-shadow(0 4px 6px rgba(0,0,0,.3)); }
+.cf-pct { font-size: 24cqw; font-weight: 900; line-height: 1; color: #fff; text-shadow: 0 1.2cqw 0 rgba(0,0,0,.22), 0 0 4cqw rgba(255,255,255,.55); letter-spacing: -.02em; }
 .cf-foot { display: grid; line-height: 1.1; padding: 3.5cqw 6cqw 4.5cqw; background: rgba(0,0,0,.32); }
 .cf-foot b { font-size: 13cqw; font-weight: 700; }
 .cf-foot small { font-size: 7.4cqw; opacity: .92; }
 .cf-tick { position: absolute; right: 6cqw; bottom: 6cqw; width: 15cqw; height: 15cqw; border-radius: 50%; background: #fff; color: var(--green); display: grid; place-items: center; box-shadow: 0 2px 5px rgba(0,0,0,.3); }
+
+/* otevření: třes, odstřižení nůžkami, odlet lemu, záblesk, vyjetí karty (2,5 s) */
+.card.opening { z-index: 9; }
+.card.opening .pk-wrap { animation: packShake 2.5s linear forwards; }
+.card.opening .pack::after { animation: none; }
+.card.opening .pk-body { animation: bodyOut 2.5s ease-in forwards; }
+.card.opening .pk-top { animation: topOff 2.5s ease-in forwards; }
+.card.opening .pk-front { animation: cardRise 2.5s cubic-bezier(.3,.7,.3,1) forwards; }
+.card.opening .pk-cut { display: block; animation: cutLine 2.5s linear forwards; }
+.card.opening .pk-burst { animation: burst 2.5s ease-out forwards; }
+.pk-cut { position: absolute; left: 0; right: 0; top: 15%; height: 0; z-index: 5; display: none; pointer-events: none; opacity: 0; }
+.pk-cut i { position: absolute; left: 0; right: 0; top: -1.5px; height: 3px; border-radius: 3px; background: repeating-linear-gradient(90deg, #fff 0 7px, transparent 7px 12px); box-shadow: 0 0 10px 2px rgba(255,255,255,.8); transform-origin: 0 50%; animation: cutDraw 2.5s linear forwards; }
+.pk-cut svg { position: absolute; top: -13px; left: 0; color: #fff; filter: drop-shadow(0 0 6px rgba(0,0,0,.6)); animation: scissors 2.5s linear forwards; }
+@keyframes packShake {
+  0% { transform: none; } 3% { transform: rotate(-4deg) scale(1.03); } 6% { transform: rotate(4deg) scale(1.05); } 9% { transform: rotate(-5deg) scale(1.06); }
+  12% { transform: rotate(5deg) scale(1.07); } 15% { transform: rotate(0) scale(1.08); } 100% { transform: rotate(0) scale(1.08); } }
+@keyframes cutLine { 0%, 14% { opacity: 0; } 16%, 36% { opacity: 1; } 40%, 100% { opacity: 0; } }
+@keyframes cutDraw { 0%, 15% { transform: scaleX(0); } 34%, 100% { transform: scaleX(1); } }
+@keyframes scissors { 0%, 15% { left: 0; transform: rotate(0); } 34% { left: calc(100% - 22px); transform: rotate(0); } 100% { left: calc(100% - 22px); } }
+@keyframes topOff { 0%, 36% { transform: none; opacity: 1; } 52% { transform: translate(34%, -170%) rotate(38deg); opacity: 1; } 62%, 100% { transform: translate(60%, -280%) rotate(70deg); opacity: 0; } }
+@keyframes bodyOut { 0%, 72% { transform: none; opacity: 1; } 100% { transform: translateY(16%); opacity: 0; } }
+@keyframes cardRise {
+  0%, 36% { opacity: 0; transform: translateY(0) scale(.84); } 38% { opacity: 1; transform: translateY(0) scale(.84); }
+  60% { opacity: 1; transform: translateY(-44%) scale(.9); } 76%, 90% { opacity: 1; transform: translateY(-44%) scale(1.08) rotate(-1.5deg); filter: drop-shadow(0 0 22px rgba(255,255,255,.9)); }
+  100% { opacity: 1; transform: translateY(0) scale(1); } }
+.pk-burst { position: absolute; left: 50%; top: 15%; width: 300%; aspect-ratio: 1; margin: -150% 0 0 -150%; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 7; background: radial-gradient(circle, #fff 0, rgba(255,255,255,.92) 14%, rgba(255,224,102,.55) 32%, transparent 60%), repeating-conic-gradient(from 0deg, rgba(255,255,255,.75) 0 5deg, transparent 5deg 15deg); -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 68%); mask-image: radial-gradient(circle, #000 25%, transparent 68%); }
+@keyframes burst { 0%, 36% { opacity: 0; transform: scale(.1) rotate(0); } 46% { opacity: 1; transform: scale(.8) rotate(20deg); } 70%, 100% { opacity: 0; transform: scale(1.5) rotate(60deg); } }
 .card.opened.t-finale .cf::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 20%, rgba(255,60,172,.3) 32%, rgba(255,214,102,.3) 42%, rgba(53,220,204,.35) 52%, rgba(91,107,255,.3) 62%, transparent 76%); background-size: 260% 100%; mix-blend-mode: soft-light; animation: holo 4.5s linear infinite; }
 @keyframes holo { from { background-position: 130% 0; } to { background-position: -130% 0; } }
 .sp { position: absolute; width: 13px; height: 13px; background: #fff; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twinkle 2.4s ease-in-out infinite; }

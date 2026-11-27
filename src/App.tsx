@@ -109,8 +109,8 @@ export default function App() {
     if (!user && !guest) { setLogin({ open: true, reason: 'Přihlaste se a otevřete okénko', pendingDay: day }); return; }
     if (!progress.opened[day] && !SHOW_ALL) {
       setOpening(day);
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(() => setBurst((b) => b + 1), 760);
-      await new Promise((r) => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1450));
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(() => setBurst((b) => b + 1), 1500);
+      await new Promise((r) => setTimeout(r, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 2700));
       setOpening(null);
       setProgress((p) => { const n = { ...p, opened: { ...p.opened, [day]: new Date().toISOString() } }; if (!user) saveGuest(n); return n; });
       if (user) backend.markOpened(user, day, preview).catch(() => notify('Okénko se nepodařilo uložit k účtu. Zkuste to prosím znovu.'));
