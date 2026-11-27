@@ -50,6 +50,13 @@ Zadání obsahovalo dvakrát stejnou slevu 5 % při nákupu nad 2 000 Kč do 10 
 5. Hosting → Get started; případně vlastní doména (nastavit `authDomain` podle domény).
 6. GitHub → Settings → Secrets → `FIREBASE_SERVICE_ACCOUNT` (JSON klíč servisního účtu; role Service Usage Consumer + Firebase Rules Admin).
 
+## Odkazy pro kontrolu
+
+- `?kontrola` – všech 24 karet je otočených, okénka jdou rovnou proklikat (nic se neukládá). Nejlepší odkaz na schvalování.
+- `?nahled=geekadvent` – všechna okénka jsou odemčená, ale boostery zůstávají zavřené (hodí se na zkoušku trhání).
+- `?kontrola&den=14` – otevře rovnou okno daného dne.
+- Bez parametru je kalendář zamčený až do 1. 12. 2026. Parametry zůstávají v adrese, odkaz jde zkopírovat z adresního řádku.
+
 ## Vývoj a nasazení
 
 ```bash

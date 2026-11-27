@@ -15,28 +15,22 @@ const EVE = Date.parse('2026-12-24T00:00:00+01:00');
 const draft = CONTENT_MODE !== 'live';
 const SS = 'gh-';
 
-/** Kontrolní režim: ?nahled=geekadvent&vse – všechny karty jsou otočené a jdou proklikat (nic se neukládá). */
-const SHOW_ALL = (() => {
-  try {
-    const q = new URL(location.href).searchParams;
-    if (q.get('nahled') === PREVIEW_KEY && q.has('vse')) sessionStorage.setItem(SS + 'vse', '1');
-    else if (q.get('nahled') !== null && q.get('nahled') !== PREVIEW_KEY) sessionStorage.removeItem(SS + 'vse');
-    return sessionStorage.getItem(SS + 'vse') === '1';
-  } catch { return false; }
-})();
+/**
+ * Kontrolní režim pro schvalování: stačí odkaz ?kontrola (odemčená okénka a všech 24 karet otočených, nic se neukládá).
+ * Starší tvar ?nahled=geekadvent odemkne okénka, s &vse k tomu i otočí karty. Parametry zůstávají v adrese,
+ * takže odkaz lze zkopírovat z adresního řádku a poslat dál.
+ */
+const params = (() => { try { return new URL(location.href).searchParams; } catch { return new URLSearchParams(); } })();
+const SHOW_ALL = params.has('kontrola') || (params.get('nahled') === PREVIEW_KEY && params.has('vse'));
 
 function readPreview(): boolean {
   try {
     const url = new URL(location.href);
     const q = url.searchParams.get('nahled');
-    if (q !== null) {
-      if (q === PREVIEW_KEY) sessionStorage.setItem(SS + 'nahled', '1');
-      else sessionStorage.removeItem(SS + 'nahled');
-      url.searchParams.delete('nahled');
-      history.replaceState(null, '', url);
-    }
+    if (q === PREVIEW_KEY || url.searchParams.has('kontrola')) { sessionStorage.setItem(SS + 'nahled', '1'); return true; }
+    if (q !== null) { sessionStorage.removeItem(SS + 'nahled'); url.searchParams.delete('nahled'); history.replaceState(null, '', url); }
     return sessionStorage.getItem(SS + 'nahled') === '1';
-  } catch { return false; }
+  } catch { return params.get('nahled') === PREVIEW_KEY || params.has('kontrola'); }
 }
 
 function useCountdown() {
@@ -166,7 +160,7 @@ export default function App() {
       {preview && (
         <div className="preview-bar">
           <Eye size={15} /> {DEMO_MODE ? 'Ukázková verze pro prezentaci – všechna okénka lze proklikat bez přihlášení' : 'Náhled: všechna okénka odemčená, lze proklikat bez přihlášení (postup se ukládá jen v tomto prohlížeči)'}{draft ? ' · obsah je ukázkový, poznámky „K potvrzení“ zmizí po přepnutí na ostrý režim' : ''}
-          {!DEMO_MODE && <button onClick={() => { try { sessionStorage.removeItem(SS + 'nahled'); } catch { /* */ } setPreview(false); }}>Ukončit</button>}
+          {!DEMO_MODE && <button onClick={() => { try { sessionStorage.removeItem(SS + 'nahled'); } catch { /* */ } const u = new URL(location.href); u.searchParams.delete('nahled'); u.searchParams.delete('vse'); u.searchParams.delete('kontrola'); location.href = u.toString(); }}>Ukončit</button>}
         </div>
       )}
 
